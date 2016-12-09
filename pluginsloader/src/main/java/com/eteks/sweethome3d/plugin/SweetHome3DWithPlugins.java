@@ -34,6 +34,9 @@ import com.eteks.sweethome3d.viewcontroller.HomeController;
  */
 public class SweetHome3DWithPlugins extends SweetHome3D {
 
+	static{
+		System.setProperty("com.eteks.sweethome3d.j3d.useOffScreen3DView","true");
+	}
 	/*
 	 * Harcoded in parent, too
 	 */
