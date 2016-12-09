@@ -134,4 +134,7 @@
 			</build>
 		</profile>
 	</profiles>
+	<modules>
+		<module>components-plugin</module>
+	</modules>
 </project>
