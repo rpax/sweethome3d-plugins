@@ -1,22 +1,26 @@
-package com.massisframework.sweethome3d.plugins.components;
+package com.massisframework.sweethome3d.plugins.components.datatypes;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class DataTypeSchema {
 
-	private Map<String, DataType> values;
+	private Map<String, FieldType> values;
 	private String name;
 
+	public DataTypeSchema(String name) {
+		this();
+		this.name=name;
+	}
 	public DataTypeSchema() {
 		this.values = new HashMap<>();
 	}
 
-	public Map<String, DataType> getValues() {
+	public Map<String, FieldType> getValues() {
 		return values;
 	}
 
-	public void setValues(Map<String, DataType> values) {
+	public void setValues(Map<String, FieldType> values) {
 		this.values = values;
 	}
 
@@ -28,7 +32,7 @@ public class DataTypeSchema {
 		this.name = name;
 	}
 
-	public void addField(String name, DataType type) {
+	public void addField(String name, FieldType type) {
 		this.values.put(name, type);
 	}
 
