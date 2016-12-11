@@ -1,4 +1,4 @@
-package com.massisframework.sweethome3d.plugins;
+package com.massisframework.sweethome3d.plugins.components;
 
 import java.util.ArrayList;
 import java.util.List;
