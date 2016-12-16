@@ -10,7 +10,7 @@ public class PluginEventBus {
 
 	private EventBus eventBus = new EventBus("PluginEventBus");
 
-	public PluginEventBus(Home home) {
+	private PluginEventBus(Home home) {
 		// ?
 	}
 
