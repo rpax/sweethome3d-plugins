@@ -8,6 +8,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.DefaultComboBoxModel;
 
 @SuppressWarnings({"serial","rawtypes"})
 public class ComponentInfoPanel extends JPanel {
@@ -28,6 +29,8 @@ public class ComponentInfoPanel extends JPanel {
 				}));
 		JScrollPane scrollPane = new JScrollPane(this.attributesTable);
 		JComboBox componentSelectCBox = new JComboBox();
+		componentSelectCBox.setEnabled(false);
+		componentSelectCBox.setModel(new DefaultComboBoxModel(new String[] {"METADATA"}));
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
 				groupLayout.createParallelGroup(Alignment.TRAILING)

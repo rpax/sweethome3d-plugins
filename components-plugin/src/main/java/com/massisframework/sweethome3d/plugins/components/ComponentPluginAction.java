@@ -2,9 +2,16 @@ package com.massisframework.sweethome3d.plugins.components;
 
 import java.awt.Container;
 import java.awt.EventQueue;
+import java.io.ByteArrayInputStream;
 
 import javax.swing.JComponent;
 import javax.swing.JSplitPane;
+
+import org.metawidget.inspectionresultprocessor.json.schema.JsonSchemaTypeMappingProcessorConfig;
+import org.metawidget.inspectionresultprocessor.type.TypeMappingInspectionResultProcessor;
+import org.metawidget.inspector.json.JsonInspectorConfig;
+import org.metawidget.inspector.json.schema.JsonSchemaInspector;
+import org.metawidget.swing.SwingMetawidget;
 
 import com.eteks.sweethome3d.HomeReadyEvent;
 import com.eteks.sweethome3d.model.Home;
@@ -37,6 +44,18 @@ public class ComponentPluginAction extends PluginAction {
 	@Override
 	public void execute() {
 		// Component table
+		String jsonSchema = "{ properties: { \"firstname\": { \"type\": \"string\", \"required\": true }, ";
+		jsonSchema += "\"age\": { \"type\": \"number\" }, ";
+		jsonSchema += "\"notes\": { \"type\": \"string\", \"large\": true }}}";
+
+		final SwingMetawidget metawidget = new SwingMetawidget();
+		metawidget.setInspector( new JsonSchemaInspector(
+			new JsonInspectorConfig().setInputStream( new ByteArrayInputStream( jsonSchema.getBytes() ))));
+		metawidget.addInspectionResultProcessor(
+			new TypeMappingInspectionResultProcessor<SwingMetawidget>(
+				new JsonSchemaTypeMappingProcessorConfig() ));
+		//metawidget.setInspectionPath( "personObject" );
+		
 	}
 	@Subscribe
 	private void onHomeReady(HomeReadyEvent evt){
