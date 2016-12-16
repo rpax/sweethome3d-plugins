@@ -107,6 +107,7 @@ public class SweetHome3DWithPlugins extends SweetHome3D {
 		private List<DynamicPluginLibrary> dynamicPluginLibs = new ArrayList<>();
 		private final Map<Home, List<Plugin>> dynamicHomePlugins = new LinkedHashMap<>();
 
+		@SuppressWarnings("unused")
 		public DynamicPluginManager(File pluginFolder, List<Class<? extends Plugin>> pluginClasses) {
 			this(new File[] { pluginFolder }, pluginClasses);
 		}
