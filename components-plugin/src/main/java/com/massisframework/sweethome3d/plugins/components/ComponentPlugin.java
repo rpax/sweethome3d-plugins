@@ -2,25 +2,19 @@ package com.massisframework.sweethome3d.plugins.components;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import com.eteks.sweethome3d.SweetHome3DWithPlugins;
 import com.eteks.sweethome3d.plugin.Plugin;
 import com.eteks.sweethome3d.plugin.PluginAction;
-import com.eteks.sweethome3d.plugin.SweetHome3DWithPlugins;
 import com.massisframework.sweethome3d.plugins.components.datatypes.editor.DataTypeEditorAction;
 
 public class ComponentPlugin extends Plugin {
 
 	@Override
-	public PluginAction[] getActions()
-	{
-		return new PluginAction[] {
-				new ComponentPluginAction(this),
-				new DataTypeEditorAction(this)
-		};
+	public PluginAction[] getActions() {
+		return new PluginAction[] { new ComponentPluginAction(this), new DataTypeEditorAction(this) };
 	}
 
-	public static void main(String[] args)
-	{
+	public static void main(String[] args) {
 
 		List<Class<? extends Plugin>> plugins = new ArrayList<>();
 		plugins.add(ComponentPlugin.class);

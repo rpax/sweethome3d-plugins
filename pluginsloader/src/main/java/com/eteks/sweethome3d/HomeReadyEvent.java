@@ -1,4 +1,4 @@
-package com.eteks.sweethome3d.plugin;
+package com.eteks.sweethome3d;
 
 import com.eteks.sweethome3d.SweetHome3D;
 import com.eteks.sweethome3d.model.Home;
