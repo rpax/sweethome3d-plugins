@@ -9,7 +9,7 @@ import javax.swing.JTable;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.table.DefaultTableModel;
 
-@SuppressWarnings("serial")
+@SuppressWarnings({"serial","rawtypes"})
 public class ComponentInfoPanel extends JPanel {
 	private JTable attributesTable;
 
@@ -24,7 +24,7 @@ public class ComponentInfoPanel extends JPanel {
 				new Object[][] {
 				},
 				new String[] {
-						"Value", "Field Name"
+						"Field Name","Value"
 				}));
 		JScrollPane scrollPane = new JScrollPane(this.attributesTable);
 		JComboBox componentSelectCBox = new JComboBox();
