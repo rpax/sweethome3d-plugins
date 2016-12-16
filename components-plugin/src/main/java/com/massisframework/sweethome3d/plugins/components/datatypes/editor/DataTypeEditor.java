@@ -287,7 +287,7 @@ public class DataTypeEditor {
 		frmDataTypeEditor = new JFrame();
 		frmDataTypeEditor.setTitle("Data Type Editor");
 		frmDataTypeEditor.setBounds(100, 100, 615, 368);
-		frmDataTypeEditor.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmDataTypeEditor.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmDataTypeEditor.getContentPane().setLayout(new BorderLayout(0, 0));
 
 		this.comboBox = new JComboBox<DataTypeSchema>();
