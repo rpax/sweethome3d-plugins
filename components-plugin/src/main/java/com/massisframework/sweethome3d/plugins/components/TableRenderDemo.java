@@ -31,6 +31,10 @@
 
 package com.massisframework.sweethome3d.plugins.components;
 
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+
 /*
  * TableRenderDemo.java requires no other files.
  */
@@ -45,9 +49,6 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.GridLayout;
 
 /** 
  * TableRenderDemo is just like TableDemo, except that it
