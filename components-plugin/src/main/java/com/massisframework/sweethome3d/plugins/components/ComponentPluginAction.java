@@ -2,6 +2,8 @@ package com.massisframework.sweethome3d.plugins.components;
 
 import java.awt.Container;
 import java.awt.EventQueue;
+import java.awt.event.ContainerEvent;
+import java.awt.event.ContainerListener;
 
 import javax.swing.JComponent;
 import javax.swing.JSplitPane;
@@ -12,12 +14,14 @@ import com.eteks.sweethome3d.model.SelectionEvent;
 import com.eteks.sweethome3d.model.SelectionListener;
 import com.eteks.sweethome3d.plugin.PluginAction;
 import com.eteks.sweethome3d.swing.HomePane;
+import com.eteks.sweethome3d.viewcontroller.HomeController;
 
 public class ComponentPluginAction extends PluginAction {
 
 	private ComponentPlugin plugin;
 	private HomePane homePane;
 	private Home home;
+	private HomeController homeController;
 
 	public ComponentPluginAction(ComponentPlugin plugin)
 	{
@@ -25,12 +29,13 @@ public class ComponentPluginAction extends PluginAction {
 		putPropertyValue(Property.MENU, "Tests");
 		putPropertyValue(Property.NAME, "Component plugin");
 		this.setEnabled(true);
+		this.homeController=plugin.getHomeController();
 	}
 
 	@Override
 	public void execute()
 	{
-		this.homePane = (HomePane) plugin.getHomeController().getView();
+		this.homePane = (HomePane) this.homeController.getView();
 		this.home = this.plugin.getHome();
 		this.addSidePane();
 		// Component table

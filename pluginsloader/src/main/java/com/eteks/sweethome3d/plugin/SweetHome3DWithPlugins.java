@@ -4,6 +4,7 @@
  */
 package com.eteks.sweethome3d.plugin;
 
+import java.awt.EventQueue;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -28,14 +29,15 @@ import com.eteks.sweethome3d.model.HomeApplication;
 import com.eteks.sweethome3d.model.Library;
 import com.eteks.sweethome3d.model.UserPreferences;
 import com.eteks.sweethome3d.viewcontroller.HomeController;
+import com.massisframework.sweethome3d.plugins.PluginEventBus;
 
 /**
  * @author Rafael Pax
  */
 public class SweetHome3DWithPlugins extends SweetHome3D {
 
-	static{
-		System.setProperty("com.eteks.sweethome3d.j3d.useOffScreen3DView","true");
+	static {
+		System.setProperty("com.eteks.sweethome3d.j3d.useOffScreen3DView", "true");
 	}
 	/*
 	 * Harcoded in parent, too
@@ -55,9 +57,32 @@ public class SweetHome3DWithPlugins extends SweetHome3D {
 	public SweetHome3DWithPlugins(List<Class<? extends Plugin>> dynamicPlugins) {
 		super();
 		this.dynamicPlugins = dynamicPlugins;
+		this.addHomesListener(new CollectionListener<Home>() {
+			@Override
+			public void collectionChanged(final CollectionEvent<Home> ev) {
+				final Home home=ev.getItem();
+				SweetHome3DWithPlugins.super.getHomeFrameController(home);
+				switch (ev.getType()) {
+				case ADD:
+					EventQueue.invokeLater(new Runnable() {
+						@Override
+						public void run() {
+							PluginEventBus.get(ev.getItem()).post(new HomeReadyEvent(SweetHome3DWithPlugins.this, home));
+						}
+					});
+					break;
+				case DELETE:
+					home.get
+					PluginEventBus.get(home).unregister(plugin);
+					break;
+				}
+			}
+		});
 
 	}
-
+	private void registerPluginsInEventBus(Home home){
+		this.getPluginManager().getPlugins(this, home, this.getUserPreferences(), );
+	}
 	public SweetHome3DWithPlugins() {
 		super();
 		this.dynamicPlugins = Collections.emptyList();
