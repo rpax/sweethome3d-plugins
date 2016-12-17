@@ -6,6 +6,9 @@
 		<artifactId>sweethome3d-plugins</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
+	<properties>
+		<javafx.version>2.2</javafx.version>
+	</properties>
 	<artifactId>components-plugin</artifactId>
 	<name>Components Plugin</name>
 	<description>Plugin for adding components to HomeObjects</description>
@@ -25,6 +28,25 @@
 			<groupId>org.metawidget.modules</groupId>
 			<artifactId>metawidget-all</artifactId>
 			<version>4.2</version>
+		</dependency>
+		<dependency>
+			<groupId>com.zenjava</groupId>
+			<artifactId>javafx-maven-plugin</artifactId>
+			<version>8.1.2</version>
+		</dependency>
+		<dependency>
+			<groupId>com.oracle</groupId>
+			<artifactId>javafx</artifactId>
+			<version>${javafx.version}</version>
+			<systemPath>${java.home}/lib/jfxrt.jar</systemPath>
+			<scope>system</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.oracle</groupId>
+			<artifactId>javafx</artifactId>
+			<version>${javafx.version}</version>
+			<systemPath>${java.home}/lib/ext/jfxrt.jar</systemPath>
+			<scope>system</scope>
 		</dependency>
 	</dependencies>
 </project>

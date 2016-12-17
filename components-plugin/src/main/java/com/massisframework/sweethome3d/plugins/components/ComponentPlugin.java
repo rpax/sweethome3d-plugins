@@ -19,6 +19,6 @@ public class ComponentPlugin extends Plugin {
 		List<Class<? extends Plugin>> plugins = new ArrayList<>();
 		plugins.add(ComponentPlugin.class);
 		SweetHome3DWithPlugins.run(args, plugins);
-
+		
 	}
 }
