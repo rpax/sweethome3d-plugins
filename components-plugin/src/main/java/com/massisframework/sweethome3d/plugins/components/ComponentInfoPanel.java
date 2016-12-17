@@ -170,23 +170,35 @@ public class ComponentInfoPanel extends JPanel {
 		this.attributesTable
 				.addPropertyChangeListener(new PropertyChangeListener() {
 					private String oldVal = null;
+					private int rowNum = -1;
+					TableModelListener tableML = new TableModelListener() {
+						@Override
+						public void tableChanged(TableModelEvent e)
+						{
+							if (e.getType() == TableModelEvent.UPDATE)
+							{
+								rowNum = e.getFirstRow();
+							}
+						}
+					};
 
 					@Override
 					public void propertyChange(PropertyChangeEvent evt)
 					{
+
 						if ("tableCellEditor".equals(evt.getPropertyName()))
 						{
+
 							if (attributesTable.isEditing())
 							{
-								oldVal=((JTextField) attributesTable.getEditorComponent()).getText();
-
+								// Check if
+								oldVal = ((JTextField) attributesTable
+										.getEditorComponent()).getText();
 							} else
 							{
-
 								String newVal = (String) ((CellEditor) evt
 										.getOldValue()).getCellEditorValue();
-								System.out.println("Changed from " + oldVal
-										+ " to " + newVal);
+								// updateKeyName(oldVal, newVal);
 								oldVal = null;
 							}
 						}
