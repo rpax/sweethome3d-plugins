@@ -34,5 +34,10 @@
 			<artifactId>javafx-maven-plugin</artifactId>
 			<version>8.1.2</version>
 		</dependency>
+		<dependency>
+			<groupId>com.massisframework</groupId>
+			<artifactId>sweethome3d-javafx</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 </project>
