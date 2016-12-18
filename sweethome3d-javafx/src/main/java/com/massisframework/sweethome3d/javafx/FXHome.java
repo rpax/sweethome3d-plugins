@@ -74,6 +74,7 @@ public class FXHome {
 				.anyMatch(piece -> piece == obj);
 	}
 
+	@SuppressWarnings("unused")
 	private static <HO extends HomeObject, T extends FXHomeObject<HO>> T getHomeObject(
 			ObservableList<T> l, HO obj)
 	{
