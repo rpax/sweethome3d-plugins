@@ -1,4 +1,4 @@
-package com.massisframework.sweethome3d.plugins;
+package com.massisframework.sweethome3d.javafx;
 
 import com.eteks.sweethome3d.model.CollectionEvent;
 import com.eteks.sweethome3d.model.CollectionListener;

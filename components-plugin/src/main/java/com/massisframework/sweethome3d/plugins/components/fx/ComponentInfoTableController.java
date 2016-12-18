@@ -1,9 +1,9 @@
 package com.massisframework.sweethome3d.plugins.components.fx;
 
 import com.eteks.sweethome3d.model.HomePieceOfFurniture;
-import com.massisframework.sweethome3d.plugins.FXHomeObject;
-import com.massisframework.sweethome3d.plugins.FXHomeObject.HomeObjectProperty;
-import com.massisframework.sweethome3d.plugins.FXHomePieceOfFurniture;
+import com.massisframework.sweethome3d.javafx.FXHomeObject;
+import com.massisframework.sweethome3d.javafx.FXHomePieceOfFurniture;
+import com.massisframework.sweethome3d.javafx.FXHomeObject.HomeObjectProperty;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;

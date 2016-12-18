@@ -1,4 +1,4 @@
-package com.massisframework.sweethome3d.plugins;
+package com.massisframework.sweethome3d.javafx;
 
 import java.beans.PropertyChangeEvent;
 

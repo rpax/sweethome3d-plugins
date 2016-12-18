@@ -17,7 +17,7 @@ import com.eteks.sweethome3d.plugin.PluginAction;
 import com.eteks.sweethome3d.swing.HomePane;
 import com.eteks.sweethome3d.viewcontroller.HomeController;
 import com.google.common.eventbus.Subscribe;
-import com.massisframework.sweethome3d.plugins.JFXPanelFactory;
+import com.massisframework.sweethome3d.javafx.JFXPanelFactory;
 import com.massisframework.sweethome3d.plugins.PluginEventBus;
 import com.massisframework.sweethome3d.plugins.components.fx.ComponentInfoController;
 

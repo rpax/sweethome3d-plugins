@@ -1,4 +1,4 @@
-package com.massisframework.sweethome3d.plugins;
+package com.massisframework.sweethome3d.javafx;
 
 import java.awt.Container;
 import java.awt.GridLayout;
