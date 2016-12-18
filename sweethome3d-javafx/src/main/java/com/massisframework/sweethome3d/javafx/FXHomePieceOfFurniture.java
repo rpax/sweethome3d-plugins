@@ -204,14 +204,5 @@ public class FXHomePieceOfFurniture
 
 		}
 	}
-	
-	protected void forceUpdate()
-	{
-		super.forceUpdate();
-		for (Property prop : HomePieceOfFurniture.Property.values())
-		{
-			this.propertyChange(prop);
-		}
-	}
 
 }

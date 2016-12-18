@@ -23,6 +23,7 @@ public class FXHome {
 	{
 		this.home = home;
 		this.furniture = FXCollections.observableArrayList();
+		this.walls = FXCollections.observableArrayList();
 		this.addListeners();
 	}
 
