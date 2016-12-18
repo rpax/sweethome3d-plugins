@@ -137,6 +137,7 @@
 	<modules>
 		<module>components-plugin</module>
 		<module>pluginsloader</module>
+		<module>sweethome3d-javafx</module>
 	</modules>
 	<dependencies>
 		<dependency>

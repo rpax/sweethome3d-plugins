@@ -2,6 +2,8 @@ package com.massisframework.sweethome3d.plugins.components;
 
 import java.awt.Container;
 import java.awt.EventQueue;
+import java.net.URL;
+import java.util.concurrent.Future;
 
 import javax.swing.JComponent;
 import javax.swing.JSplitPane;
@@ -15,7 +17,9 @@ import com.eteks.sweethome3d.plugin.PluginAction;
 import com.eteks.sweethome3d.swing.HomePane;
 import com.eteks.sweethome3d.viewcontroller.HomeController;
 import com.google.common.eventbus.Subscribe;
+import com.massisframework.sweethome3d.plugins.JFXPanelFactory;
 import com.massisframework.sweethome3d.plugins.PluginEventBus;
+import com.massisframework.sweethome3d.plugins.components.fx.ComponentInfoController;
 
 public class ComponentPluginAction extends PluginAction {
 
@@ -55,7 +59,22 @@ public class ComponentPluginAction extends PluginAction {
 			public void run()
 			{
 				// try{
-				ComponentInfoPanel cip = new ComponentInfoPanel();
+				URL fxmlLocation = ComponentInfoController.class
+						.getResource("ComponentInfoPanel.fxml");
+
+				Future<JComponent> f = JFXPanelFactory.getInstance()
+						.loadFromURL(fxmlLocation);
+				JComponent cip = null;
+
+				try
+				{
+					cip = f.get();
+				} catch (Exception e)
+				{
+					e.printStackTrace();
+				}
+
+				
 				HomePane homePane = (HomePane) homeController.getView();
 				Container contentPane = homePane.getContentPane();
 				Container mainPane = (Container) contentPane.getComponent(1);
@@ -71,6 +90,7 @@ public class ComponentPluginAction extends PluginAction {
 
 				furniturePane.add(splitPane, 1);
 				splitPane.setDividerLocation(150);
+				// cip.revalidate();
 				home.addSelectionListener(new SelectionListener() {
 					@Override
 					public void selectionChanged(SelectionEvent selectionEvent)
@@ -79,7 +99,7 @@ public class ComponentPluginAction extends PluginAction {
 						{
 							HomeObject homeObject = (HomeObject) selectionEvent
 									.getSelectedItems().get(0);
-							
+
 							// componentTable.fillWith(homeObject);
 						} else
 						{
