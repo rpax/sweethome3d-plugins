@@ -59,56 +59,56 @@ public class FXWall extends FXHomeObject<Wall> {
 		switch (type)
 		{
 		case ARC_EXTENT:
-			this.arcExtent.set(this.piece.getArcExtent());
+			this.arcExtent.set(this.homeObject.getArcExtent());
 			break;
 		case HEIGHT:
-			this.height.set(this.piece.getHeight());
+			this.height.set(this.homeObject.getHeight());
 			break;
 		case HEIGHT_AT_END:
-			if (piece.getHeightAtEnd() == null)
+			if (homeObject.getHeightAtEnd() == null)
 			{
 				this.heightAtEnd.bind(this.height);
 			} else
 			{
 				this.heightAtEnd.unbind();
-				this.heightAtEnd.set(piece.getHeightAtEnd());
+				this.heightAtEnd.set(homeObject.getHeightAtEnd());
 			}
 			break;
 		case LEFT_SIDE_BASEBOARD:
-			this.leftSideBaseboard.set(piece.getLeftSideBaseboard());
+			this.leftSideBaseboard.set(homeObject.getLeftSideBaseboard());
 			break;
 		case LEFT_SIDE_COLOR:
-			this.leftSideColor.set(piece.getLeftSideColor());
+			this.leftSideColor.set(homeObject.getLeftSideColor());
 			break;
 		case LEFT_SIDE_SHININESS:
-			this.leftSideShininess.set(piece.getLeftSideShininess());
+			this.leftSideShininess.set(homeObject.getLeftSideShininess());
 			break;
 		case LEFT_SIDE_TEXTURE:
-			this.leftSideTexture.set(piece.getLeftSideTexture());
+			this.leftSideTexture.set(homeObject.getLeftSideTexture());
 			break;
 		case LEVEL:
-			this.level.set(piece.getLevel());
+			this.level.set(homeObject.getLevel());
 			break;
 		case PATTERN:
-			this.pattern.set(piece.getPattern());
+			this.pattern.set(homeObject.getPattern());
 			break;
 		case RIGHT_SIDE_BASEBOARD:
-			this.rightSideBaseboard.set(piece.getRightSideBaseboard());
+			this.rightSideBaseboard.set(homeObject.getRightSideBaseboard());
 			break;
 		case RIGHT_SIDE_COLOR:
-			this.rightSideColor.set(piece.getRightSideColor());
+			this.rightSideColor.set(homeObject.getRightSideColor());
 			break;
 		case RIGHT_SIDE_SHININESS:
-			this.rightSideShininess.set(piece.getRightSideShininess());
+			this.rightSideShininess.set(homeObject.getRightSideShininess());
 			break;
 		case RIGHT_SIDE_TEXTURE:
-			this.rightSideTexture.set(piece.getRightSideTexture());
+			this.rightSideTexture.set(homeObject.getRightSideTexture());
 			break;
 		case THICKNESS:
-			this.thickness.set(piece.getThickness());
+			this.thickness.set(homeObject.getThickness());
 			break;
 		case TOP_COLOR:
-			this.topColor.set(piece.getTopColor());
+			this.topColor.set(homeObject.getTopColor());
 			break;
 		case WALL_AT_END:
 			// TODO
@@ -119,16 +119,16 @@ public class FXWall extends FXHomeObject<Wall> {
 			// this.wallAtStart.set(piece.getWallAtStart());
 			break;
 		case X_END:
-			this.xEnd.set(piece.getXEnd());
+			this.xEnd.set(homeObject.getXEnd());
 			break;
 		case X_START:
-			this.xStart.set(piece.getXStart());
+			this.xStart.set(homeObject.getXStart());
 			break;
 		case Y_END:
-			this.yEnd.set(piece.getXEnd());
+			this.yEnd.set(homeObject.getXEnd());
 			break;
 		case Y_START:
-			this.yStart.set(piece.getYStart());
+			this.yStart.set(homeObject.getYStart());
 			break;
 		default:
 			break;

@@ -1,6 +1,7 @@
 package com.massisframework.sweethome3d.javafx;
 
 import java.beans.PropertyChangeEvent;
+import java.math.BigDecimal;
 
 import com.eteks.sweethome3d.model.Content;
 import com.eteks.sweethome3d.model.HomeMaterial;
@@ -40,9 +41,9 @@ public class FXHomePieceOfFurniture
 	private final ReadOnlyBooleanWrapper movable;
 	private final ReadOnlyBooleanWrapper doorOrWindow;
 	private final ReadOnlyObjectWrapper<HomeMaterial[]> modelMaterials;
-	private final ReadOnlyIntegerWrapper color;
+	private final ReadOnlyObjectWrapper<Integer> color;
 	private final ReadOnlyObjectWrapper<HomeTexture> texture;
-	private final ReadOnlyFloatWrapper shininess;
+	private final ReadOnlyObjectWrapper<Float> shininess;
 	private final ReadOnlyObjectWrapper<float[][]> modelRotation;
 	private final ReadOnlyStringWrapper staircaseCutOutShape;
 	private final ReadOnlyStringWrapper creator;
@@ -50,9 +51,9 @@ public class FXHomePieceOfFurniture
 	private final ReadOnlyBooleanWrapper resizable;
 	private final ReadOnlyBooleanWrapper deformable;
 	private final ReadOnlyBooleanWrapper texturable;
-	private final ReadOnlyDoubleWrapper price;
-	private final ReadOnlyDoubleWrapper valueAddedTaxPercentage;
-	private final ReadOnlyStringWrapper currency;
+	private final ReadOnlyObjectWrapper<BigDecimal> price;
+	private final ReadOnlyObjectWrapper<BigDecimal> valueAddedTaxPercentage;
+	private final ReadOnlyObjectWrapper<String> currency;
 	private final ReadOnlyBooleanWrapper visible;
 	private final ReadOnlyFloatWrapper x;
 	private final ReadOnlyFloatWrapper y;
@@ -80,21 +81,18 @@ public class FXHomePieceOfFurniture
 				piece.getDropOnTopElevation());
 		this.movable = new ReadOnlyBooleanWrapper(piece.isMovable());
 		this.doorOrWindow = new ReadOnlyBooleanWrapper(piece.isDoorOrWindow());
-		this.color = new ReadOnlyIntegerWrapper(piece.getColor());
-		this.modelRotation = new ReadOnlyObjectWrapper<>(
-				piece.getModelRotation());
+		this.color = new ReadOnlyObjectWrapper<>(piece.getColor());
+		this.modelRotation = new ReadOnlyObjectWrapper<>(piece.getModelRotation());
 		this.staircaseCutOutShape = new ReadOnlyStringWrapper(
 				piece.getStaircaseCutOutShape());
 		this.creator = new ReadOnlyStringWrapper(piece.getCreator());
-		this.backFaceShown = new ReadOnlyBooleanWrapper(
-				piece.isBackFaceShown());
+		this.backFaceShown = new ReadOnlyBooleanWrapper(piece.isBackFaceShown());
 		this.resizable = new ReadOnlyBooleanWrapper(piece.isResizable());
 		this.deformable = new ReadOnlyBooleanWrapper(piece.isDeformable());
 		this.texturable = new ReadOnlyBooleanWrapper(piece.isTexturable());
-		this.price = new ReadOnlyDoubleWrapper(piece.getPrice().doubleValue());
-		this.valueAddedTaxPercentage = new ReadOnlyDoubleWrapper(
-				piece.getValueAddedTaxPercentage().doubleValue());
-		this.currency = new ReadOnlyStringWrapper(piece.getCurrency());
+		this.price = new ReadOnlyObjectWrapper<>(piece.getPrice());
+		this.valueAddedTaxPercentage = new ReadOnlyObjectWrapper<>(piece.getValueAddedTaxPercentage());
+		this.currency = new ReadOnlyObjectWrapper<String>(piece.getCurrency());
 
 		this.catalogId = new ReadOnlyStringWrapper(piece.getCatalogId());
 		this.nameVisible = new ReadOnlyBooleanWrapper(piece.isNameVisible());
@@ -109,7 +107,7 @@ public class FXHomePieceOfFurniture
 		this.modelMirrored = new ReadOnlyBooleanWrapper(
 				piece.isModelMirrored());
 		this.texture = new ReadOnlyObjectWrapper<>(piece.getTexture());
-		this.shininess = new ReadOnlyFloatWrapper(piece.getShininess());
+		this.shininess = new ReadOnlyObjectWrapper<>(piece.getShininess());
 		this.modelMaterials = new ReadOnlyObjectWrapper<>(
 				piece.getModelMaterials());
 		this.level = new ReadOnlyObjectWrapper<>(piece,
@@ -131,73 +129,73 @@ public class FXHomePieceOfFurniture
 		switch (prop)
 		{
 		case ANGLE:
-			this.angle.set(this.piece.getAngle());
+			this.angle.set(this.homeObject.getAngle());
 			break;
 		case COLOR:
-			this.color.set(this.piece.getColor());
+			this.color.set(this.homeObject.getColor());
 			break;
 		case DEPTH:
-			this.depth.set(this.piece.getDepth());
+			this.depth.set(this.homeObject.getDepth());
 			break;
 		case DESCRIPTION:
-			this.description.set(this.piece.getDescription());
+			this.description.set(this.homeObject.getDescription());
 			break;
 		case ELEVATION:
-			this.elevation.set(this.piece.getElevation());
+			this.elevation.set(this.homeObject.getElevation());
 			break;
 		case HEIGHT:
-			this.height.set(this.piece.getHeight());
+			this.height.set(this.homeObject.getHeight());
 			break;
 		case LEVEL:
-			this.level.set(this.piece.getLevel());
+			this.level.set(this.homeObject.getLevel());
 			break;
 		case MODEL_MATERIALS:
-			this.modelMaterials.set(this.piece.getModelMaterials());
+			this.modelMaterials.set(this.homeObject.getModelMaterials());
 			break;
 		case MODEL_MIRRORED:
-			this.modelMirrored.set(this.piece.isModelMirrored());
+			this.modelMirrored.set(this.homeObject.isModelMirrored());
 			break;
 		case MOVABLE:
-			this.movable.set(this.piece.isMovable());
+			this.movable.set(this.homeObject.isMovable());
 			break;
 		case NAME:
-			this.name.set(this.piece.getName());
+			this.name.set(this.homeObject.getName());
 			break;
 		case NAME_ANGLE:
-			this.nameAngle.set(this.piece.getNameAngle());
+			this.nameAngle.set(this.homeObject.getNameAngle());
 			break;
 		case NAME_STYLE:
-			this.nameStyle.setValue(this.piece.getNameStyle());
+			this.nameStyle.setValue(this.homeObject.getNameStyle());
 			break;
 		case NAME_VISIBLE:
-			this.nameVisible.setValue(this.piece.isNameVisible());
+			this.nameVisible.setValue(this.homeObject.isNameVisible());
 			break;
 		case NAME_X_OFFSET:
-			this.nameXOffset.set(this.piece.getNameXOffset());
+			this.nameXOffset.set(this.homeObject.getNameXOffset());
 			break;
 		case NAME_Y_OFFSET:
-			this.nameYOffset.set(this.piece.getNameYOffset());
+			this.nameYOffset.set(this.homeObject.getNameYOffset());
 			break;
 		case PRICE:
-			this.price.set(this.piece.getPrice().doubleValue());
+			this.price.set(this.homeObject.getPrice());
 			break;
 		case SHININESS:
-			this.shininess.set(this.piece.getShininess());
+			this.shininess.set(this.homeObject.getShininess());
 			break;
 		case TEXTURE:
-			this.texture.set(this.piece.getTexture());
+			this.texture.set(this.homeObject.getTexture());
 			break;
 		case VISIBLE:
-			this.visible.set(this.piece.isVisible());
+			this.visible.set(this.homeObject.isVisible());
 			break;
 		case WIDTH:
-			this.width.set(this.piece.getWidth());
+			this.width.set(this.homeObject.getWidth());
 			break;
 		case X:
-			this.x.set(this.piece.getX());
+			this.x.set(this.homeObject.getX());
 			break;
 		case Y:
-			this.y.set(this.piece.getY());
+			this.y.set(this.homeObject.getY());
 			break;
 		default:
 			break;

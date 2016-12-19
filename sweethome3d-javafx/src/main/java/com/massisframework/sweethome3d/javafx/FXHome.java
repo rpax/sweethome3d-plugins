@@ -1,8 +1,13 @@
 package com.massisframework.sweethome3d.javafx;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
+import javax.swing.SwingUtilities;
+
 import com.eteks.sweethome3d.model.CollectionEvent;
+import com.eteks.sweethome3d.model.CollectionEvent.Type;
 import com.eteks.sweethome3d.model.CollectionListener;
 import com.eteks.sweethome3d.model.Home;
 import com.eteks.sweethome3d.model.HomeObject;
@@ -10,6 +15,7 @@ import com.eteks.sweethome3d.model.HomePieceOfFurniture;
 import com.eteks.sweethome3d.model.SelectionListener;
 import com.eteks.sweethome3d.model.Wall;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -32,8 +38,8 @@ public class FXHome {
 		this.furniture = FXCollections.observableArrayList();
 		this.walls = FXCollections.observableArrayList();
 		this.addListeners();
-		this.home.getFurniture().forEach(this::addFurniture);
-		this.home.getWalls().forEach(this::addWall);
+		this.home.getFurniture().forEach(f -> addHomeObject(this.furniture, f));
+		this.home.getWalls().forEach(w -> addHomeObject(this.walls, w));
 	}
 
 	private void addListeners()
@@ -46,27 +52,6 @@ public class FXHome {
 		this.home.addWallsListener(this.wallsListener);
 	}
 
-	private SelectionListener createSelectionListener()
-	{
-		return evt -> {
-
-			System.out.println("Selection evt!: " + evt.getSelectedItems());
-			// TODO measure performance & GUI binding
-			this.selectedItems.clear();
-			this.home.getSelectedItems()
-					.stream()
-					.filter(o -> (o instanceof HomeObject))
-					.map(HomeObject.class::cast)
-					.map(this::getHomeObject)
-					// TODO temporary: we dont have all types
-					.filter(fx -> fx != null)
-					.filter(Optional::isPresent)
-					.map(Optional::get)
-					.forEach(this.selectedItems::add);
-			// TODOS los que tengamos aqui que no tengamos antes
-		};
-	}
-
 	public void removeListeners()
 	{
 		this.home.removeFurnitureListener(this.furnitureListener);
@@ -76,6 +61,33 @@ public class FXHome {
 	/*
 	 * Utility methods
 	 */
+	private SelectionListener createSelectionListener()
+	{
+		return evt -> {
+			System.out.println(
+					"Selection changed on thread " + Thread.currentThread());
+			final List<? extends Object> evtSelectedItems = new ArrayList<>(
+					evt.getSelectedItems());
+			try{
+			this.selectedItems.clear();
+			evtSelectedItems
+					.stream()
+					.filter(o -> (o instanceof HomeObject))
+					.map(HomeObject.class::cast)
+					.map(this::getHomeObject)
+					.filter(fx -> fx != null)
+					.filter(Optional::isPresent)
+					.map(Optional::get)
+					.forEach(this.selectedItems::add);
+			System.out.println("END: "+this.selectedItems);
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+			// TODOS los que tengamos aqui que no tengamos antes
+		};
+
+	}
+
 	private static <HO extends HomeObject, T extends FXHomeObject<HO>> CollectionListener<HO> createCollectionListener(
 			final ObservableList<T> l)
 	{
@@ -84,29 +96,26 @@ public class FXHome {
 			@Override
 			public void collectionChanged(CollectionEvent<HO> ev)
 			{
-				switch (ev.getType())
-				{
-				case ADD:
-					addHomeObject(l, ev.getItem());
-					break;
-				case DELETE:
-					removeHomeObject(l, ev.getItem());
-					break;
-				default:
-					break;
-				}
+
+				HO item = ev.getItem();
+				Type type = ev.getType();
+				System.out.println("Collection changed on thread "
+						+ Thread.currentThread());
+				Platform.runLater(() -> {
+					switch (type)
+					{
+					case ADD:
+						addHomeObject(l, item);
+						break;
+					case DELETE:
+						removeHomeObject(l, item);
+						break;
+					default:
+						break;
+					}
+				});
 			}
 		};
-	}
-
-	private boolean addFurniture(HomePieceOfFurniture hpof)
-	{
-		return addHomeObject(this.furniture, hpof);
-	}
-
-	private boolean addWall(Wall w)
-	{
-		return addHomeObject(this.walls, w);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -128,13 +137,11 @@ public class FXHome {
 		return item;
 	}
 
-	
-
 	private static <HO extends HomeObject, T extends FXHomeObject<HO>> boolean homeObjectExists(
 			ObservableList<T> l, HO obj)
 	{
 		return l.stream()
-				.map(FXHomeObject::getPiece)
+				.map(FXHomeObject::getHomeObject)
 				.anyMatch(piece -> piece == obj);
 	}
 
@@ -142,7 +149,7 @@ public class FXHome {
 			ObservableList<T> l, HO obj)
 	{
 		return l.stream()
-				.filter(o -> o.getPiece() == obj)
+				.filter(o -> o.getHomeObject() == obj)
 				.findAny();
 	}
 
@@ -150,9 +157,9 @@ public class FXHome {
 			ObservableList<T> l, HO obj)
 	{
 		boolean exists = homeObjectExists(l, obj);
+
 		if (!exists)
 		{
-			System.out.println("Adding " + obj);
 			l.add(createFXHomeObject(obj));
 			return true;
 		} else
@@ -164,7 +171,7 @@ public class FXHome {
 	private static <HO extends HomeObject, T extends FXHomeObject<HO>> boolean removeHomeObject(
 			ObservableList<T> l, HO obj)
 	{
-		return l.removeIf(o -> o.getPiece() == obj);
+		return l.removeIf(o -> o.getHomeObject() == obj);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -173,8 +180,7 @@ public class FXHome {
 	{
 		if (obj instanceof HomePieceOfFurniture)
 		{
-			return (T) new FXHomePieceOfFurniture(
-					(HomePieceOfFurniture) obj);
+			return (T) new FXHomePieceOfFurniture((HomePieceOfFurniture) obj);
 		} else if (obj instanceof Wall)
 		{
 			return (T) new FXWall((Wall) obj);

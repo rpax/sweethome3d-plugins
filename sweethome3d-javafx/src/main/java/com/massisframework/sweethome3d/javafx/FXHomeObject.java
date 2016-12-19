@@ -16,14 +16,14 @@ public abstract class FXHomeObject<HO extends HomeObject>
 		ID, VERSION;
 	}
 
-	protected final HO piece;
+	protected final HO homeObject;
 	protected HomeObjectMetadata metadata;
 	private static final String METADATA_KEY = "__MASSIS_METADATA";
 	public static final String MAIN_PARAMS_KEY = "__MASSIS_MAIN_PARAMS";
 
 	public FXHomeObject(HO piece)
 	{
-		this.piece = piece;
+		this.homeObject = piece;
 		this.loadProperties();
 		this.metadata.sectionsProperty()
 				.addListener((ListChangeListener<MetadataSection>) c -> {
@@ -33,13 +33,13 @@ public abstract class FXHomeObject<HO extends HomeObject>
 
 	private void saveProperties()
 	{
-		this.piece.setProperty(METADATA_KEY,
+		this.homeObject.setProperty(METADATA_KEY,
 				HomeObjectMetadata.toJson(this.metadata));
 	}
 
 	private void loadProperties()
 	{
-		String json = this.piece.getProperty(METADATA_KEY);
+		String json = this.homeObject.getProperty(METADATA_KEY);
 		if (json == null)
 		{
 			this.metadata = new HomeObjectMetadata();
@@ -64,9 +64,9 @@ public abstract class FXHomeObject<HO extends HomeObject>
 		return this.metadata;
 	}
 
-	public HO getPiece()
+	public HO getHomeObject()
 	{
-		return piece;
+		return homeObject;
 	}
 
 }

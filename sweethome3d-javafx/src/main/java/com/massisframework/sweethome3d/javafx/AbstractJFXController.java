@@ -16,6 +16,6 @@ public class AbstractJFXController implements JFXController {
 	{
 		return this.root;
 	}
-
+	
 	
 }

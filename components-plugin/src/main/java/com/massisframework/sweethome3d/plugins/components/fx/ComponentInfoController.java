@@ -1,20 +1,18 @@
 package com.massisframework.sweethome3d.plugins.components.fx;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 import com.massisframework.sweethome3d.javafx.AbstractJFXController;
 import com.massisframework.sweethome3d.javafx.FXHomeObject;
+import com.massisframework.sweethome3d.javafx.JFXPanelFactory;
 import com.massisframework.sweethome3d.javafx.properties.MetadataSection;
 
 import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 
-public class ComponentInfoController extends AbstractJFXController{
+public class ComponentInfoController extends AbstractJFXController {
 	@FXML
 	private AnchorPane componentsSectionPane;
 	private Map<MetadataSection, ComponentInfoTableController> sectionControllers;
@@ -27,7 +25,7 @@ public class ComponentInfoController extends AbstractJFXController{
 	@FXML
 	public void initialize()
 	{
-
+		System.out.println("initialized!");
 	}
 
 	public void setFXHomeObject(FXHomeObject<?> obj)
@@ -47,7 +45,8 @@ public class ComponentInfoController extends AbstractJFXController{
 					c.getAddedSubList().forEach(s -> {
 						addPane(s);
 					});
-					if (c.wasUpdated()){
+					if (c.wasUpdated())
+					{
 						// for (int i = from; i < to; i++)
 						// {
 						// updatePane();
@@ -63,18 +62,16 @@ public class ComponentInfoController extends AbstractJFXController{
 				.get(section);
 		if (controller == null)
 		{
-			FXMLLoader fxmlLoader = new FXMLLoader();
+
 			try
 			{
-				Pane p = fxmlLoader
-						.load(getClass().getResource("ComponentInfoPanel.fxml")
-								.openStream());
-				ComponentInfoTableController c = (ComponentInfoTableController) fxmlLoader
-						.getController();
-				c.setSection(p, section);
+				ComponentInfoTableController c = (ComponentInfoTableController) JFXPanelFactory.loadController(
+						getClass().getResource("ComponentInfoPanel.fxml"));
+				c.setSection(section);
 				this.sectionControllers.put(section, c);
-			} catch (IOException e)
+			} catch (Exception e)
 			{
+				e.printStackTrace();
 				throw new RuntimeException(e);
 			}
 		}
