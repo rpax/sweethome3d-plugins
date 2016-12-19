@@ -59,6 +59,11 @@ public abstract class FXHomeObject<HO extends HomeObject>
 		}
 	}
 
+	public HomeObjectMetadata getMetadata()
+	{
+		return this.metadata;
+	}
+
 	public HO getPiece()
 	{
 		return piece;

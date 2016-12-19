@@ -1,22 +1,23 @@
 package com.massisframework.sweethome3d.plugins.components.fx;
 
-import com.eteks.sweethome3d.model.HomePieceOfFurniture;
-import com.massisframework.sweethome3d.javafx.FXHomeObject;
-import com.massisframework.sweethome3d.javafx.FXHomePieceOfFurniture;
-import com.massisframework.sweethome3d.javafx.FXHomeObject.HomeObjectProperty;
+import com.massisframework.sweethome3d.javafx.properties.MetadataEntry;
+import com.massisframework.sweethome3d.javafx.properties.MetadataSection;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.layout.Pane;
 
 public class ComponentInfoTableController {
 
 	@FXML
-	private TableView<HomeObjectProperty> metadataTable;
+	private TableView<MetadataEntry> metadataTable;
 	@FXML
-	private TableColumn<FXHomePieceOfFurniture, String> metadataKeys;
+	private TableColumn<MetadataEntry, String> metadataKeys;
 	@FXML
-	private TableColumn<FXHomePieceOfFurniture, String> metadataValues;
+	private TableColumn<MetadataEntry, String> metadataValues;
+
+	private Pane root;
 
 	@FXML
 	public void initialize()
@@ -24,13 +25,20 @@ public class ComponentInfoTableController {
 		// Observable home object
 	}
 
-	public void setHomeObject(HomePieceOfFurniture obj)
+	public void setSection(Pane root, MetadataSection section)
 	{
-
+		this.root = root;
+		this.metadataTable.setItems(section.attributesProperty());
+		// Cell renderer
+		this.metadataKeys.setCellValueFactory(
+				param -> param.getValue().getKeyProperty());
+		this.metadataValues.setCellValueFactory(
+				param -> param.getValue().getValueProperty());
 	}
 
-	public void setHomeObject(FXHomeObject<?> obj)
+	public Pane getRoot()
 	{
-		this.metadataTable.setItems(obj.getProperties());
+		return this.root;
 	}
+
 }

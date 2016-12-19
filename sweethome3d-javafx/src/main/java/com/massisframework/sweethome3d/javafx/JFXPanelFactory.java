@@ -58,4 +58,32 @@ public final class JFXPanelFactory {
 
 		return cF;
 	}
+
+	public static <T extends JFXController> Future<JComponent> wrapInFXPanel(
+			JFXController controller)
+	{
+
+		final CompletableFuture<JComponent> cF = new CompletableFuture<>();
+		JFXPanel fxPanel = new JFXPanel();
+		JPanel parent = new JPanel();
+		parent.setLayout(new GridLayout(1, 0));
+		parent.add(fxPanel);
+		Platform.runLater(() -> {
+			fxPanel.setScene(new Scene(controller.getRoot()));
+			cF.complete(parent);
+		});
+
+		return cF;
+	}
+
+	@SuppressWarnings("unchecked")
+	public static <T extends AbstractJFXController> T loadController(
+			final URL location) throws IOException
+	{
+		FXMLLoader fxmlLoader = new FXMLLoader();
+		Parent root = fxmlLoader.load(location.openStream());
+		T c = (T) fxmlLoader.getController();
+		c.setRoot(root);
+		return c;
+	}
 }
