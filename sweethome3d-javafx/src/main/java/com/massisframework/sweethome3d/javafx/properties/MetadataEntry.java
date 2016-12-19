@@ -1,42 +1,25 @@
 package com.massisframework.sweethome3d.javafx.properties;
 
 import javafx.beans.property.ReadOnlyStringProperty;
-import javafx.beans.property.ReadOnlyStringWrapper;
 
-public class MetadataEntry {
+public interface MetadataEntry {
 
-	private final ReadOnlyStringWrapper keyProperty;
-	private final ReadOnlyStringWrapper valueProperty;
+	ReadOnlyStringProperty getKeyProperty();
 
-	public MetadataEntry(String key, String value)
-	{
-		this.keyProperty = new ReadOnlyStringWrapper(key);
-		this.valueProperty = new ReadOnlyStringWrapper(value);
-	}
+	ReadOnlyStringProperty getValueProperty();
 
-	public ReadOnlyStringProperty getKeyProperty()
-	{
-		return keyProperty.getReadOnlyProperty();
-	}
-
-	public String getKey()
-	{
-		return getKeyProperty().get();
-	}
-
-	public String getValue()
+	boolean setValue(String val);
+	
+	default String getValue()
 	{
 		return getValueProperty().get();
 	}
 
-	public ReadOnlyStringProperty getValueProperty()
+	default String getKey()
 	{
-		return valueProperty.getReadOnlyProperty();
+		return getKeyProperty().get();
 	}
-
-	public void setValue(String val)
-	{
-		this.valueProperty.set(val);
-	}
+	
+	
 
 }

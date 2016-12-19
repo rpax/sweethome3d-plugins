@@ -7,19 +7,24 @@ import com.massisframework.sweethome3d.javafx.AbstractJFXController;
 import com.massisframework.sweethome3d.javafx.FXHome;
 import com.massisframework.sweethome3d.javafx.FXHomeObject;
 import com.massisframework.sweethome3d.javafx.JFXPanelFactory;
-import com.massisframework.sweethome3d.javafx.properties.MetadataSection;
+import com.massisframework.sweethome3d.javafx.properties.MetadataObject;
 
 import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
+import javafx.scene.control.Accordion;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TitledPane;
 import javafx.scene.layout.AnchorPane;
 
 public class ComponentInfoController extends AbstractJFXController {
 	@FXML
-	private AnchorPane componentsSectionPane;
-	private Map<MetadataSection, ComponentInfoTableController> sectionControllers;
+	private Accordion componentsAccordion;
+	@FXML
+	private ScrollPane componentsScrollPane;
+	private Map<MetadataObject, ComponentInfoTableController> sectionControllers;
 	private FXHome home;
 	private FXHomeObject<?> currentObj;
-	private ListChangeListener<MetadataSection> changeListener;
+	private ListChangeListener<MetadataObject> changeListener;
 	private ListChangeListener<FXHomeObject<?>> selectionListener;
 
 	public ComponentInfoController()
@@ -30,20 +35,22 @@ public class ComponentInfoController extends AbstractJFXController {
 	@FXML
 	public void initialize()
 	{
-		this.changeListener = (ListChangeListener<MetadataSection>) c -> {
+		this.changeListener = (ListChangeListener<MetadataObject>) c -> {
 			// Y si iteramos por todos y los ponemos como toca?
-			int from = c.getFrom();
-			int to = c.getTo();
-			c.getRemoved().forEach(s -> {
-				removePane(s);
-			});
-			c.getAddedSubList().forEach(s -> {
-				addPane(s);
-			});
-			if (c.wasUpdated())
+			while (c.next())
 			{
+				c.getRemoved().forEach(s -> {
+					removePane(s);
+				});
+				c.getAddedSubList().forEach(s -> {
+					addPane(s);
+				});
+				if (c.wasUpdated())
+				{
 
+				}
 			}
+
 		};
 		this.selectionListener = (ListChangeListener<FXHomeObject<?>>) c -> {
 			if (c.getList().size() == 1)
@@ -54,6 +61,11 @@ public class ComponentInfoController extends AbstractJFXController {
 				clear();
 			}
 		};
+		AnchorPane.setLeftAnchor(componentsScrollPane, 0.0);
+		AnchorPane.setRightAnchor(componentsScrollPane, 0.0);
+		AnchorPane.setLeftAnchor(componentsAccordion, 0.0);
+		AnchorPane.setRightAnchor(componentsAccordion, 0.0);
+
 	}
 
 	public void setFXHome(FXHome home)
@@ -65,7 +77,7 @@ public class ComponentInfoController extends AbstractJFXController {
 	private void clear()
 	{
 		this.sectionControllers.clear();
-		this.componentsSectionPane.getChildren().clear();
+		this.componentsAccordion.getPanes().clear();
 		if (this.currentObj != null)
 		{
 			this.currentObj.getMetadata().sectionsProperty()
@@ -85,7 +97,7 @@ public class ComponentInfoController extends AbstractJFXController {
 
 	}
 
-	private void addPane(MetadataSection section)
+	private void addPane(MetadataObject section)
 	{
 		ComponentInfoTableController controller = this.sectionControllers
 				.get(section);
@@ -98,7 +110,8 @@ public class ComponentInfoController extends AbstractJFXController {
 								.getResource("ComponentInfoTitledPane.fxml"));
 				c.setSection(section);
 				this.sectionControllers.put(section, c);
-				this.componentsSectionPane.getChildren().add(c.getRoot());
+				this.componentsAccordion.getPanes()
+						.add((TitledPane) c.getRoot());
 				AnchorPane.setBottomAnchor(c.getRoot(), 0.0);
 				AnchorPane.setTopAnchor(c.getRoot(), 0.0);
 				AnchorPane.setLeftAnchor(c.getRoot(), 0.0);
@@ -111,13 +124,13 @@ public class ComponentInfoController extends AbstractJFXController {
 		}
 	}
 
-	private void removePane(MetadataSection s)
+	private void removePane(MetadataObject s)
 	{
 		ComponentInfoTableController controller = this.sectionControllers
 				.remove(s);
 		if (controller != null)
 		{
-			this.componentsSectionPane.getChildren()
+			this.componentsAccordion.getPanes()
 					.remove(controller.getRoot());
 		}
 	}

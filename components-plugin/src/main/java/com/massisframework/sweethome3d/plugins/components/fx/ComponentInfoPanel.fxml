@@ -1,18 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-	xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1"
+<AnchorPane cacheShape="false" xmlns="http://javafx.com/javafx/8.0.65"
+	xmlns:fx="http://javafx.com/fxml/1"
 	fx:controller="com.massisframework.sweethome3d.plugins.components.fx.ComponentInfoController">
 	<children>
-		<ScrollPane fitToWidth="true"
-			AnchorPane.bottomAnchor="0"
-			AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0"
-			AnchorPane.topAnchor="0">
+		<ScrollPane fx:id="componentsScrollPane"
+			fitToHeight="true"
+			fitToWidth="true"
+			>
 			<content>
-				<AnchorPane fx:id="componentsSectionPane" />
+				<AnchorPane cacheShape="false">
+					<children>
+						<Accordion fx:id="componentsAccordion" cacheShape="false" />
+					</children>
+				</AnchorPane>
 			</content>
 		</ScrollPane>
 	</children>

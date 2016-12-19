@@ -22,21 +22,12 @@ public class ComponentPlugin extends Plugin implements MassisPlugin {
 	public void onHomeReady()
 	{
 		this.action.onHomeReady();
-		this.homeReady = true;
 	}
 
 	@Override
 	public PluginAction[] getActions()
 	{
-		if (this.action == null)
-		{
-			this.action = new ComponentPluginAction(this);
-		}
-		if (this.homeReady)
-		{
-			this.action.onHomeReady();
-		}
-		return new PluginAction[] { this.action };
+		return new PluginAction[] { this.action = new ComponentPluginAction(this) };
 	}
 
 	public static void main(String[] args)

@@ -14,13 +14,13 @@ public class HomeObjectMetadata {
 
 	public static final long VERSION = 1000;
 
-	private final ReadOnlyListWrapper<MetadataSection> sections;
+	private final ReadOnlyListWrapper<MetadataObject> sections;
 	private static final String ATTRIBUTES_KEY = "attributes";
 	private static final String ID_KEY = "id";
 	private static final String NAME_KEY = "name";
 	private static final String DESCRIPTION_KEY = "description";
 	private static final String KEY_KEY = "key";
-	private static final String VALUE_KEY = "key";
+	private static final String VALUE_KEY = "value";
 
 	private static final Gson GSON = new Gson();
 
@@ -30,16 +30,17 @@ public class HomeObjectMetadata {
 				FXCollections.observableArrayList(p -> new Observable[] {
 						p.idProperty(),
 						p.nameProperty(),
-						p.descriptionProperty()
+						p.descriptionProperty(),
+						p.entriesProperty()
 				}));
 	}
 
-	public ReadOnlyListProperty<MetadataSection> sectionsProperty()
+	public ReadOnlyListProperty<MetadataObject> sectionsProperty()
 	{
 		return this.sections.getReadOnlyProperty();
 	}
 
-	public MetadataSection addSection(MetadataSection section)
+	public MetadataObject addSection(MetadataObject section)
 	{
 		this.sections.add(section);
 		return section;
@@ -50,20 +51,19 @@ public class HomeObjectMetadata {
 		return this.sections.removeIf(s -> s.idProperty().get().equals(id));
 	}
 
-	private static MetadataSection deserializeSection(JsonElement json)
+	private static MetadataObject deserializeSection(JsonElement json)
 	{
 		JsonObject obj = json.getAsJsonObject();
 		String id = obj.get(ID_KEY).getAsString();
 		String name = obj.get(NAME_KEY).getAsString();
 		String description = obj.get(DESCRIPTION_KEY).getAsString();
-		MetadataSection metadataSection = new MetadataSection(id, name,
-				description);
+		MapMetadataSection metadataSection = new MapMetadataSection(id, name,description);
 		JsonArray attributes = obj.get(ATTRIBUTES_KEY).getAsJsonArray();
 		for (JsonElement attr : attributes)
 		{
 			String key = attr.getAsJsonObject().get(KEY_KEY).getAsString();
 			String value = attr.getAsJsonObject().get(VALUE_KEY).getAsString();
-			metadataSection.addEntry(key, value);
+			metadataSection.put(key, value);
 		}
 		return metadataSection;
 	}
@@ -81,7 +81,7 @@ public class HomeObjectMetadata {
 	private static JsonArray toJsonArray(HomeObjectMetadata metadata)
 	{
 		JsonArray array = new JsonArray();
-		for (MetadataSection section : metadata.sectionsProperty())
+		for (MetadataObject section : metadata.sectionsProperty())
 		{
 			array.add(serialize(section));
 		}
@@ -99,16 +99,16 @@ public class HomeObjectMetadata {
 		return metadata;
 	}
 
-	public static JsonObject serialize(MetadataSection metadataSection)
+	public static JsonObject serialize(MetadataObject metadataSection)
 	{
 		JsonObject obj = new JsonObject();
-		obj.addProperty(ID_KEY, metadataSection.idProperty().get());
+		obj.addProperty(ID_KEY, metadataSection.getId());
 		obj.addProperty(NAME_KEY, metadataSection.nameProperty().get());
 		obj.addProperty(DESCRIPTION_KEY,
 				metadataSection.descriptionProperty().get());
 		JsonArray attributes = new JsonArray();
 
-		metadataSection.attributesProperty()
+		metadataSection.entriesProperty()
 				.stream()
 				.map(HomeObjectMetadata::serialize)
 				.forEach(attributes::add);

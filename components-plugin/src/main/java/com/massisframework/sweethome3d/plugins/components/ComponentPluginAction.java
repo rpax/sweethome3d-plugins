@@ -2,11 +2,9 @@ package com.massisframework.sweethome3d.plugins.components;
 
 import java.awt.Container;
 import java.net.URL;
-import java.util.concurrent.Future;
 
 import javax.swing.JComponent;
 import javax.swing.JSplitPane;
-import javax.swing.SwingUtilities;
 
 import com.eteks.sweethome3d.plugin.PluginAction;
 import com.eteks.sweethome3d.swing.HomePane;
@@ -14,8 +12,6 @@ import com.eteks.sweethome3d.viewcontroller.HomeController;
 import com.massisframework.sweethome3d.javafx.FXHome;
 import com.massisframework.sweethome3d.javafx.JFXPanelFactory;
 import com.massisframework.sweethome3d.plugins.components.fx.ComponentInfoController;
-
-import javafx.util.Pair;
 
 public class ComponentPluginAction extends PluginAction {
 
@@ -41,51 +37,45 @@ public class ComponentPluginAction extends PluginAction {
 
 	public void onHomeReady()
 	{
-		if (!SwingUtilities.isEventDispatchThread())
-		{
-			SwingUtilities.invokeLater(() -> {
-				addSidePane();
-			});
-		} else
-		{
-			addSidePane();
-		}
+		// SwingUtilities.invokeLater(() -> {
+		addSidePane();
+		// });
 	}
 
 	private void addSidePane()
 	{
-		try
-		{
 
-			// try{
-			URL fxmlLocation = ComponentInfoController.class
-					.getResource("ComponentInfoPanel.fxml");
+		// try{
+		URL fxmlLocation = ComponentInfoController.class
+				.getResource("ComponentInfoPanel.fxml");
 
-			JComponent sidePane = null;
-			Future<Pair<JComponent,ComponentInfoController>> future = JFXPanelFactory.wrapInFXPanel(fxmlLocation);
-			sidePane = future.get().getKey();
-			future.get().getValue().setFXHome(this.home);
-			//
-			HomePane homePane = (HomePane) homeController.getView();
-			Container contentPane = homePane.getContentPane();
-			Container mainPane = (Container) contentPane.getComponent(1);
-			JComponent furniturePane = (JComponent) mainPane
-					.getComponent(0);
-			JComponent tablePane = (JComponent) furniturePane
-					.getComponent(1);
-			furniturePane.remove(tablePane);
-			final JSplitPane splitPane = new JSplitPane(
-					JSplitPane.VERTICAL_SPLIT,
-					tablePane,
-					sidePane);
-			furniturePane.add(splitPane, 1);
-			splitPane.setDividerLocation(150);
-		
-		} catch (Exception e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		JFXPanelFactory.wrapInFXPanel(fxmlLocation, (sidePane, controller) -> {
+			((ComponentInfoController) controller).setFXHome(this.home);
+			try
+			{
+//				
+//				//
+				HomePane homePane = (HomePane) homeController.getView();
+				Container contentPane = homePane.getContentPane();
+				Container mainPane = (Container) contentPane.getComponent(1);
+				JComponent furniturePane = (JComponent) mainPane
+						.getComponent(0);
+				JComponent tablePane = (JComponent) furniturePane
+						.getComponent(1);
+				furniturePane.remove(tablePane);
+				final JSplitPane splitPane = new JSplitPane(
+						JSplitPane.VERTICAL_SPLIT,
+						tablePane,
+						sidePane);
+				furniturePane.add(splitPane, 1);
+				splitPane.setDividerLocation(150);
+			} catch (Exception e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
+
 		// cip.revalidate();
 	}
 

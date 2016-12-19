@@ -1,20 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<TitledPane fx:id="titledPane" animated="false" maxHeight="8192" maxWidth="8192" text="[CMP_TITLE]" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.massisframework.sweethome3d.plugins.components.fx.ComponentInfoTableController">
+<TitledPane fx:id="titledPane" animated="false" cacheShape="false" maxHeight="8192" maxWidth="8192" text="[CMP_TITLE]" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.massisframework.sweethome3d.plugins.components.fx.ComponentInfoTableController">
 	<content>
-		<AnchorPane maxHeight="8192" maxWidth="8192" minHeight="0" minWidth="0">
+		<AnchorPane cacheShape="false" maxHeight="8192" maxWidth="8192" minHeight="0" minWidth="0">
 			<children>
-				<TableView fx:id="metadataTable" minWidth="128" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
-					<columns>
-						<TableColumn fx:id="metadataKeys" minWidth="64" prefWidth="-1" text="Key" />
-						<TableColumn fx:id="metadataValues" minWidth="64" prefWidth="183.19997711181642" text="Value" />
-					</columns>
-				</TableView>
+				<ScrollPane fitToHeight="true" fitToWidth="true">
+					<content>
+                  <AnchorPane>
+                     <children>
+      						<TableView fx:id="metadataTable" cacheShape="false" editable="true" minWidth="128">
+      							<columns>
+      								<TableColumn fx:id="metadataKeys" minWidth="64" prefWidth="-1" text="Key" />
+      								<TableColumn fx:id="metadataValues" minWidth="64" prefWidth="180.0" text="Value" />
+      							</columns>
+      						</TableView>
+                     </children>
+                  </AnchorPane>
+					</content>
+				</ScrollPane>
 			</children>
 		</AnchorPane>
 	</content>

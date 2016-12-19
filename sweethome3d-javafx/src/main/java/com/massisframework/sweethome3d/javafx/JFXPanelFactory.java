@@ -2,21 +2,25 @@ package com.massisframework.sweethome3d.javafx;
 
 import java.awt.GridLayout;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.net.URL;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
+import java.util.function.BiConsumer;
 
-import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import com.sun.javafx.scene.control.skin.ScrollPaneSkin;
+
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.embed.swing.JFXPanel;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.util.Pair;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Skin;
+import javafx.scene.layout.StackPane;
 
 public final class JFXPanelFactory {
 
@@ -36,10 +40,9 @@ public final class JFXPanelFactory {
 		return new JFXPanel();
 	}
 
-	public static <T extends JFXController> Future<Pair<JComponent, T>> wrapInFXPanel(
-			final URL location)
+	public static <T extends JFXController> void wrapInFXPanel(
+			final URL location, BiConsumer<JFXPanel, T> action)
 	{
-		final CompletableFuture<Pair<JComponent, T>> cF = new CompletableFuture<>();
 		JFXPanel fxPanel = new JFXPanel();
 		JPanel parent = new JPanel();
 		parent.setLayout(new GridLayout(1, 0));
@@ -49,16 +52,20 @@ public final class JFXPanelFactory {
 			{
 				T controller = (T) loadController(location);
 				fxPanel.setScene(new Scene(controller.getRoot()));
-				cF.complete(new Pair<JComponent, T>(parent, controller));
+				SwingUtilities.invokeLater(() -> {
+					action.accept(fxPanel, controller);
+				});
 			} catch (Exception e)
 			{
 				e.printStackTrace();
-				cF.completeExceptionally(e);
+				action.accept(null, null);
+
 			}
 		});
 
-		return cF;
 	}
+
+	
 
 	@SuppressWarnings("unchecked")
 	public static <T extends AbstractJFXController> T loadController(
