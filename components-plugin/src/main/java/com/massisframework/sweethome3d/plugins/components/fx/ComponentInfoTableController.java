@@ -1,15 +1,19 @@
 package com.massisframework.sweethome3d.plugins.components.fx;
 
 import com.massisframework.sweethome3d.javafx.AbstractJFXController;
+import com.massisframework.sweethome3d.javafx.properties.HomeObjectMetadata;
 import com.massisframework.sweethome3d.javafx.properties.MetadataEntry;
 import com.massisframework.sweethome3d.javafx.properties.MetadataSection;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TitledPane;
 
 public class ComponentInfoTableController extends AbstractJFXController {
 
+	@FXML
+	private TitledPane titledPane;
 	@FXML
 	private TableView<MetadataEntry> metadataTable;
 	@FXML
@@ -25,6 +29,7 @@ public class ComponentInfoTableController extends AbstractJFXController {
 
 	public void setSection(MetadataSection section)
 	{
+		this.titledPane.setText(section.nameProperty().get());
 		this.metadataTable.setItems(section.attributesProperty());
 		// Cell renderer
 		this.metadataKeys.setCellValueFactory(

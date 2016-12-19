@@ -5,22 +5,14 @@
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<TitledPane animated="false" maxHeight="1.7976931348623157E308"
-	maxWidth="1.7976931348623157E308" text="untitled" xmlns:fx="http://javafx.com/fxml/1"
-	xmlns="http://javafx.com/javafx/8.0.65"
-	fx:controller="com.massisframework.sweethome3d.plugins.components.fx.ComponentInfoTableController">
+<TitledPane fx:id="titledPane" animated="false" maxHeight="8192" maxWidth="8192" text="[CMP_TITLE]" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.massisframework.sweethome3d.plugins.components.fx.ComponentInfoTableController">
 	<content>
-		<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-			minHeight="0.0" minWidth="0.0">
+		<AnchorPane maxHeight="8192" maxWidth="8192" minHeight="0" minWidth="0">
 			<children>
-				<TableView fx:id="metadataTable" minWidth="128.0"
-					AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-					AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+				<TableView fx:id="metadataTable" minWidth="128" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
 					<columns>
-						<TableColumn fx:id="metadataKeys" minWidth="64.0"
-							prefWidth="-1.0" text="Key" />
-						<TableColumn fx:id="metadataValues" minWidth="64.0"
-							prefWidth="-1.0" text="Value" />
+						<TableColumn fx:id="metadataKeys" minWidth="64" prefWidth="-1" text="Key" />
+						<TableColumn fx:id="metadataValues" minWidth="64" prefWidth="183.19997711181642" text="Value" />
 					</columns>
 				</TableView>
 			</children>

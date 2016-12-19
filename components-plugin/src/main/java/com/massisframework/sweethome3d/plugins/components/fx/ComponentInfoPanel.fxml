@@ -3,12 +3,17 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.massisframework.sweethome3d.plugins.components.fx.ComponentInfoController">
-   <children>
-      <ScrollPane minHeight="128.0" minWidth="128.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <content>
-          <AnchorPane fx:id="componentsSectionPane" minHeight="128.0" minWidth="128.0" style="-fx-background-color: blue;" />
-        </content>
-      </ScrollPane>
-   </children>
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+	xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="com.massisframework.sweethome3d.plugins.components.fx.ComponentInfoController">
+	<children>
+		<ScrollPane fitToWidth="true"
+			AnchorPane.bottomAnchor="0"
+			AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0"
+			AnchorPane.topAnchor="0">
+			<content>
+				<AnchorPane fx:id="componentsSectionPane" />
+			</content>
+		</ScrollPane>
+	</children>
 </AnchorPane>

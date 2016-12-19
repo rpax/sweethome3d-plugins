@@ -15,6 +15,7 @@ public class MetadataSection {
 	private final ReadOnlyStringWrapper id;
 	private final ReadOnlyStringWrapper description;
 	private final ReadOnlyStringWrapper name;
+	private boolean editable;
 
 	public MetadataSection(String id)
 	{
@@ -30,7 +31,7 @@ public class MetadataSection {
 	{
 		Objects.requireNonNull(id);
 		friendlyName = friendlyName == null ? "" : friendlyName;
-		friendlyName = description == null ? "" : description;
+		description = description == null ? "" : description;
 		this.id = new ReadOnlyStringWrapper(id);
 		this.name = new ReadOnlyStringWrapper(friendlyName);
 		this.description = new ReadOnlyStringWrapper(description);
@@ -77,5 +78,15 @@ public class MetadataSection {
 			this.attributes.add(new MetadataEntry(key, value));
 			return true;
 		}
+	}
+
+	public void setEditable(boolean b)
+	{
+		this.editable = false;
+	}
+
+	public boolean isEditable()
+	{
+		return editable;
 	}
 }

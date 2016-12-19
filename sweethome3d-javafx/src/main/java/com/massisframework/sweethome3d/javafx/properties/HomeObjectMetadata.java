@@ -99,7 +99,7 @@ public class HomeObjectMetadata {
 		return metadata;
 	}
 
-	private static JsonObject serialize(MetadataSection metadataSection)
+	public static JsonObject serialize(MetadataSection metadataSection)
 	{
 		JsonObject obj = new JsonObject();
 		obj.addProperty(ID_KEY, metadataSection.idProperty().get());

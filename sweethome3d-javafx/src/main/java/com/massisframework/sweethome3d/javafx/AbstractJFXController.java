@@ -9,6 +9,7 @@ public class AbstractJFXController implements JFXController {
 	void setRoot(Parent root)
 	{
 		this.root = root;
+		this.root.setCache(false);
 	}
 
 	@Override

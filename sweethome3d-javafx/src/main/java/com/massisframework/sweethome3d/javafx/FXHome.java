@@ -64,23 +64,28 @@ public class FXHome {
 	private SelectionListener createSelectionListener()
 	{
 		return evt -> {
-			System.out.println(
-					"Selection changed on thread " + Thread.currentThread());
 			final List<? extends Object> evtSelectedItems = new ArrayList<>(
 					evt.getSelectedItems());
-			try{
-			this.selectedItems.clear();
-			evtSelectedItems
-					.stream()
-					.filter(o -> (o instanceof HomeObject))
-					.map(HomeObject.class::cast)
-					.map(this::getHomeObject)
-					.filter(fx -> fx != null)
-					.filter(Optional::isPresent)
-					.map(Optional::get)
-					.forEach(this.selectedItems::add);
-			System.out.println("END: "+this.selectedItems);
-			}catch(Exception e){
+			try
+			{
+				Platform.runLater(() -> {
+					this.selectedItems.clear();
+					evtSelectedItems
+							.stream()
+							.filter(o -> (o instanceof HomeObject))
+							.map(HomeObject.class::cast)
+							.map(this::getHomeObject)
+							.filter(fx -> fx != null)
+							.filter(Optional::isPresent)
+							.map(Optional::get)
+							.forEach(s -> {
+								Platform.runLater(() -> {
+									this.selectedItems.add(s);
+								});
+							});
+				});
+			} catch (Exception e)
+			{
 				e.printStackTrace();
 			}
 			// TODOS los que tengamos aqui que no tengamos antes
@@ -99,8 +104,6 @@ public class FXHome {
 
 				HO item = ev.getItem();
 				Type type = ev.getType();
-				System.out.println("Collection changed on thread "
-						+ Thread.currentThread());
 				Platform.runLater(() -> {
 					switch (type)
 					{
@@ -195,5 +198,10 @@ public class FXHome {
 	public ObservableList<FXHomeObject<?>> selectedItemsProperty()
 	{
 		return this.selectedItems;
+	}
+
+	public ObservableList<FXHomePieceOfFurniture> furnitureProperty()
+	{
+		return this.furniture;
 	}
 }

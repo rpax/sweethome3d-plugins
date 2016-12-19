@@ -16,6 +16,7 @@ import javafx.embed.swing.JFXPanel;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.util.Pair;
 
 public final class JFXPanelFactory {
 
@@ -35,11 +36,10 @@ public final class JFXPanelFactory {
 		return new JFXPanel();
 	}
 
-	public static <T extends JFXController> Future<JComponent> wrapInFXPanel(
+	public static <T extends JFXController> Future<Pair<JComponent, T>> wrapInFXPanel(
 			final URL location)
 	{
-		final CompletableFuture<JComponent> cF = new CompletableFuture<>();
-
+		final CompletableFuture<Pair<JComponent, T>> cF = new CompletableFuture<>();
 		JFXPanel fxPanel = new JFXPanel();
 		JPanel parent = new JPanel();
 		parent.setLayout(new GridLayout(1, 0));
@@ -49,7 +49,7 @@ public final class JFXPanelFactory {
 			{
 				T controller = (T) loadController(location);
 				fxPanel.setScene(new Scene(controller.getRoot()));
-				cF.complete(parent);
+				cF.complete(new Pair<JComponent, T>(parent, controller));
 			} catch (Exception e)
 			{
 				e.printStackTrace();
