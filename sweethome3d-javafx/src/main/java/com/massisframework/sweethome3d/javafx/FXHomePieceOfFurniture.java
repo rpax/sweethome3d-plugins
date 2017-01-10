@@ -12,9 +12,7 @@ import com.eteks.sweethome3d.model.Level;
 import com.eteks.sweethome3d.model.TextStyle;
 
 import javafx.beans.property.ReadOnlyBooleanWrapper;
-import javafx.beans.property.ReadOnlyDoubleWrapper;
 import javafx.beans.property.ReadOnlyFloatWrapper;
-import javafx.beans.property.ReadOnlyIntegerWrapper;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.ReadOnlyStringWrapper;
 
