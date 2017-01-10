@@ -6,11 +6,11 @@ import java.util.List;
 import com.eteks.sweethome3d.SweetHome3DWithPlugins;
 import com.eteks.sweethome3d.plugin.Plugin;
 import com.eteks.sweethome3d.plugin.PluginAction;
-import com.massisframework.sweethome3d.plugins.MassisPlugin;
+import com.massisframework.sweethome3d.plugins.HomeReadyListener;
 
-public class ComponentPlugin extends Plugin implements MassisPlugin {
+public class ComponentPlugin extends Plugin implements HomeReadyListener {
 
-	private ComponentPluginAction action;
+	private PluginAction[] actions;
 	private boolean homeReady;
 
 	public ComponentPlugin()
@@ -21,13 +21,20 @@ public class ComponentPlugin extends Plugin implements MassisPlugin {
 	@Override
 	public void onHomeReady()
 	{
-		this.action.onHomeReady();
+		for (PluginAction pluginAction : actions)
+		{
+			if (pluginAction instanceof HomeReadyListener)
+			{
+				((HomeReadyListener) pluginAction).onHomeReady();
+			}
+		}
 	}
 
 	@Override
 	public PluginAction[] getActions()
 	{
-		return new PluginAction[] { this.action = new ComponentPluginAction(this) };
+		this.actions = new PluginAction[] { new ComponentPluginAction(this) };
+		return this.actions;
 	}
 
 	public static void main(String[] args)

@@ -7,4 +7,6 @@ public interface MetadataObjectHeader {
 	public String getName();
 
 	public String getDescription();
+	
+	public boolean isRemovable();
 }

@@ -22,7 +22,7 @@ import com.eteks.sweethome3d.plugin.DynamicPluginManager;
 import com.eteks.sweethome3d.plugin.HomePluginController;
 import com.eteks.sweethome3d.plugin.Plugin;
 import com.eteks.sweethome3d.plugin.PluginManager;
-import com.massisframework.sweethome3d.plugins.MassisPlugin;
+import com.massisframework.sweethome3d.plugins.HomeReadyListener;
 
 /**
  * @author Rafael Pax
@@ -85,9 +85,9 @@ public class SweetHome3DWithPlugins extends SweetHome3D {
 	private void postHomeReady(Home home)
 	{
 		getLoadedPlugins(home).stream()
-				.filter(p -> (p instanceof MassisPlugin))
-				.map(MassisPlugin.class::cast)
-				.forEach(MassisPlugin::onHomeReady);
+				.filter(p -> (p instanceof HomeReadyListener))
+				.map(HomeReadyListener.class::cast)
+				.forEach(HomeReadyListener::onHomeReady);
 		;
 	}
 

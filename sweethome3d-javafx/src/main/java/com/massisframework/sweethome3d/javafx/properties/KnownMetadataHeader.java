@@ -2,12 +2,14 @@ package com.massisframework.sweethome3d.javafx.properties;
 
 public enum KnownMetadataHeader implements MetadataObjectHeader {
 
-	ID_VERSION("_ID_VERSION", "MASSIS Common Data"), COMMON_METADATA(
-			"_COMMON_METADATA", "Common metadata");
+	ID_VERSION("_ID_VERSION", "MASSIS Common Data"),
+	//
+	COMMON_METADATA("_COMMON_METADATA", "Common metadata");
 
 	private String name;
 	private String description;
 	private String id;
+	private boolean removable;
 
 	KnownMetadataHeader(String id, String name)
 	{
@@ -34,6 +36,11 @@ public enum KnownMetadataHeader implements MetadataObjectHeader {
 	public String getDescription()
 	{
 		return description;
+	}
+
+	public boolean isRemovable()
+	{
+		return false;
 	}
 
 }

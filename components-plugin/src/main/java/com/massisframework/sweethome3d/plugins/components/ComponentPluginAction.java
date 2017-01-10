@@ -11,20 +11,17 @@ import com.eteks.sweethome3d.swing.HomePane;
 import com.eteks.sweethome3d.viewcontroller.HomeController;
 import com.massisframework.sweethome3d.javafx.FXHome;
 import com.massisframework.sweethome3d.javafx.JFXPanelFactory;
+import com.massisframework.sweethome3d.plugins.HomeReadyListener;
 import com.massisframework.sweethome3d.plugins.components.fx.ComponentInfoController;
 
-public class ComponentPluginAction extends PluginAction {
+public class ComponentPluginAction extends PluginAction implements HomeReadyListener{
 
-	private ComponentPlugin plugin;
 	private FXHome home;
 	private HomeController homeController;
 
 	public ComponentPluginAction(ComponentPlugin plugin)
 	{
-		this.plugin = plugin;
 		this.home = new FXHome(plugin.getHome());
-		putPropertyValue(Property.MENU, "Tests");
-		putPropertyValue(Property.NAME, "Component plugin");
 		this.setEnabled(true);
 		this.homeController = plugin.getHomeController();
 	}
@@ -34,7 +31,7 @@ public class ComponentPluginAction extends PluginAction {
 	{
 
 	}
-
+	@Override
 	public void onHomeReady()
 	{
 		// SwingUtilities.invokeLater(() -> {
@@ -53,8 +50,8 @@ public class ComponentPluginAction extends PluginAction {
 			((ComponentInfoController) controller).setFXHome(this.home);
 			try
 			{
-//				
-//				//
+				//
+				// //
 				HomePane homePane = (HomePane) homeController.getView();
 				Container contentPane = homePane.getContentPane();
 				Container mainPane = (Container) contentPane.getComponent(1);
