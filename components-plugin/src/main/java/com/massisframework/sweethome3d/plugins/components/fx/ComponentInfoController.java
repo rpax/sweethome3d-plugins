@@ -11,14 +11,14 @@ import com.massisframework.sweethome3d.javafx.properties.MetadataObject;
 
 import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
-import javafx.scene.control.Accordion;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 
 public class ComponentInfoController extends AbstractJFXController {
 	@FXML
-	private Accordion componentsAccordion;
+	private VBox componentsAccordion;
 	@FXML
 	private ScrollPane componentsScrollPane;
 	private Map<MetadataObject, ComponentInfoTableController> sectionControllers;
@@ -53,6 +53,7 @@ public class ComponentInfoController extends AbstractJFXController {
 
 		};
 		this.selectionListener = (ListChangeListener<FXHomeObject<?>>) c -> {
+
 			if (c.getList().size() == 1)
 			{
 				setFXHomeObject(c.getList().get(0));
@@ -61,8 +62,8 @@ public class ComponentInfoController extends AbstractJFXController {
 				clear();
 			}
 		};
-		AnchorPane.setLeftAnchor(componentsScrollPane, 0.0);
-		AnchorPane.setRightAnchor(componentsScrollPane, 0.0);
+//		AnchorPane.setLeftAnchor(componentsScrollPane, 0.0);
+//		AnchorPane.setRightAnchor(componentsScrollPane, 0.0);
 		AnchorPane.setLeftAnchor(componentsAccordion, 0.0);
 		AnchorPane.setRightAnchor(componentsAccordion, 0.0);
 
@@ -77,7 +78,7 @@ public class ComponentInfoController extends AbstractJFXController {
 	private void clear()
 	{
 		this.sectionControllers.clear();
-		this.componentsAccordion.getPanes().clear();
+		this.componentsAccordion.getChildren().clear();
 		if (this.currentObj != null)
 		{
 			this.currentObj.getMetadata().sectionsProperty()
@@ -110,12 +111,9 @@ public class ComponentInfoController extends AbstractJFXController {
 								.getResource("ComponentInfoTitledPane.fxml"));
 				c.setSection(section);
 				this.sectionControllers.put(section, c);
-				this.componentsAccordion.getPanes()
+				this.componentsAccordion.getChildren()
 						.add((TitledPane) c.getRoot());
-				AnchorPane.setBottomAnchor(c.getRoot(), 0.0);
-				AnchorPane.setTopAnchor(c.getRoot(), 0.0);
-				AnchorPane.setLeftAnchor(c.getRoot(), 0.0);
-				AnchorPane.setRightAnchor(c.getRoot(), 0.0);
+
 			} catch (Exception e)
 			{
 				e.printStackTrace();
@@ -130,7 +128,7 @@ public class ComponentInfoController extends AbstractJFXController {
 				.remove(s);
 		if (controller != null)
 		{
-			this.componentsAccordion.getPanes()
+			this.componentsAccordion.getChildren()
 					.remove(controller.getRoot());
 		}
 	}

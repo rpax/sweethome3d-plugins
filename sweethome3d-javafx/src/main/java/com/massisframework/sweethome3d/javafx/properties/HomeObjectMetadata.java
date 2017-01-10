@@ -1,5 +1,7 @@
 package com.massisframework.sweethome3d.javafx.properties;
 
+import java.util.Optional;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -46,6 +48,13 @@ public class HomeObjectMetadata {
 		return section;
 	}
 
+
+	public Optional<MetadataObject> getSection(String id)
+	{
+		return this.sections.stream()
+				.filter(s -> s.getId().equals(id)).findAny();
+	}
+
 	public boolean removeSection(String id)
 	{
 		return this.sections.removeIf(s -> s.idProperty().get().equals(id));
@@ -57,7 +66,8 @@ public class HomeObjectMetadata {
 		String id = obj.get(ID_KEY).getAsString();
 		String name = obj.get(NAME_KEY).getAsString();
 		String description = obj.get(DESCRIPTION_KEY).getAsString();
-		MapMetadataSection metadataSection = new MapMetadataSection(id, name,description);
+		MapMetadataSection metadataSection = new MapMetadataSection(id, name,
+				description);
 		JsonArray attributes = obj.get(ATTRIBUTES_KEY).getAsJsonArray();
 		for (JsonElement attr : attributes)
 		{

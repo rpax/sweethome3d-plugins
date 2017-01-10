@@ -4,7 +4,6 @@
  */
 package com.eteks.sweethome3d;
 
-import java.awt.EventQueue;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -14,8 +13,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.eteks.sweethome3d.io.FileUserPreferences;
-import com.eteks.sweethome3d.model.CollectionEvent;
-import com.eteks.sweethome3d.model.CollectionListener;
 import com.eteks.sweethome3d.model.Home;
 import com.eteks.sweethome3d.model.UserPreferences;
 import com.eteks.sweethome3d.plugin.DynamicPluginManager;
@@ -52,43 +49,25 @@ public class SweetHome3DWithPlugins extends SweetHome3D {
 		new SweetHome3DWithPlugins().init(args);
 	}
 
+	public SweetHome3DWithPlugins()
+	{
+		this(Collections.emptyList());
+	}
+
 	public SweetHome3DWithPlugins(List<Class<? extends Plugin>> dynamicPlugins)
 	{
 		super();
 		this.dynamicPlugins = dynamicPlugins;
-
-		this.addHomesListener(new CollectionListener<Home>() {
-			@Override
-			public void collectionChanged(final CollectionEvent<Home> ev)
-			{
-				final Home home = ev.getItem();
-				switch (ev.getType())
-				{
-				case ADD:
-					EventQueue.invokeLater(new Runnable() {
-						@Override
-						public void run()
-						{
-							postHomeReady(home);
-						}
-					});
-					break;
-				case DELETE:
-					// TODO
-					break;
-				}
-			}
-		});
-
 	}
 
 	private void postHomeReady(Home home)
 	{
+
 		getLoadedPlugins(home).stream()
 				.filter(p -> (p instanceof HomeReadyListener))
 				.map(HomeReadyListener.class::cast)
 				.forEach(HomeReadyListener::onHomeReady);
-		;
+
 	}
 
 	//
@@ -98,12 +77,6 @@ public class SweetHome3DWithPlugins extends SweetHome3D {
 		HomePluginController hpc = ((HomePluginController) hfc
 				.getHomeController());
 		return hpc.getPlugins();
-	}
-
-	public SweetHome3DWithPlugins()
-	{
-		super();
-		this.dynamicPlugins = Collections.emptyList();
 	}
 
 	@Override
@@ -159,6 +132,35 @@ public class SweetHome3DWithPlugins extends SweetHome3D {
 					.log(Level.SEVERE, null, ex);
 		}
 		return null;
+	}
+
+	@Override
+	protected void start(String[] args)
+	{
+		super.start(args);
+		Home firstHome = this.getHomes().get(0);
+		firstHome.setModified(!firstHome.isModified());
+		firstHome.setModified(!firstHome.isModified());
+		this.getHomes().forEach(this::postHomeReady);
+		this.addHomesListener(ev -> {
+			final Home home = ev.getItem();
+			switch (ev.getType())
+			{
+			case ADD:
+				postHomeReady(home);
+				if (firstHome.getName() == null
+						&& !firstHome.isRecovered()
+						&& !firstHome.isModified())
+				{
+					this.deleteHome(firstHome);
+				}
+				break;
+			case DELETE:
+				break;
+			}
+
+		});
+
 	}
 
 }

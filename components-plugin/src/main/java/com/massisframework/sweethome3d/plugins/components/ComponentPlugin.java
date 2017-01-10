@@ -21,6 +21,7 @@ public class ComponentPlugin extends Plugin implements HomeReadyListener {
 	@Override
 	public void onHomeReady()
 	{
+		this.homeReady = true;
 		for (PluginAction pluginAction : actions)
 		{
 			if (pluginAction instanceof HomeReadyListener)

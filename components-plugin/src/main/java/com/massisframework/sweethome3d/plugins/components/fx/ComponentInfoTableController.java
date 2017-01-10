@@ -1,7 +1,5 @@
 package com.massisframework.sweethome3d.plugins.components.fx;
 
-import java.util.Optional;
-
 import com.massisframework.sweethome3d.javafx.AbstractJFXController;
 import com.massisframework.sweethome3d.javafx.properties.MapMetadataEntry;
 import com.massisframework.sweethome3d.javafx.properties.MetadataEntry;
@@ -10,21 +8,21 @@ import com.massisframework.sweethome3d.javafx.properties.MetadataObject;
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
-import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.TitledPane;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
-import javafx.stage.Popup;
 
 public class ComponentInfoTableController extends AbstractJFXController {
 
+	@FXML
+	private ScrollPane topScroll;
+	@FXML
+	private AnchorPane anchorPaneWrapper;
 	@FXML
 	private TitledPane titledPane;
 	@FXML
@@ -40,26 +38,11 @@ public class ComponentInfoTableController extends AbstractJFXController {
 	@FXML
 	public void initialize()
 	{
+		this.titledPane.setExpanded(true);
 		// Observable home object
 		this.metadataTable.setEditable(true);
 		this.metadataTable.setFixedCellSize(30);
 
-		final TextField name = new TextField();
-
-		final Label hello = new Label();
-		Button ok = new Button("ok");
-		Button cencel = new Button("cancel");
-
-		VBox popUpVBox = new VBox();
-		popUpVBox.getChildren().add(hello);
-		popUpVBox.getChildren().add(name);
-		popUpVBox.getChildren().add(ok);
-		popUpVBox.getChildren().add(cencel);
-
-		AnchorPane.setLeftAnchor(metadataTable, 0.0);
-		AnchorPane.setRightAnchor(metadataTable, 0.0);
-		AnchorPane.setLeftAnchor(titledPane, 0.0);
-		AnchorPane.setRightAnchor(titledPane, 0.0);
 	}
 
 	public void addItem(ActionEvent t)
@@ -68,16 +51,13 @@ public class ComponentInfoTableController extends AbstractJFXController {
 				"Please, enter the key name");
 		dialog.setTitle("Please, enter the key name");
 		dialog.setHeaderText("Please, enter the key name");
-		dialog.setContentText("");
-		// Traditional way to get the response value.
-		Optional<String> result = dialog.showAndWait();
-		// The Java 8 way to get the response value (with lambda expression).
-		result.ifPresent(name -> {
-			if (!name.isEmpty())
-			{
-				this.section.put(name, "");
-			}
-		});
+		dialog.setContentText("KEY");
+		dialog.showAndWait()
+				.filter(name -> !name.isEmpty())
+				.ifPresent(name -> {
+					this.section.put(name, "value");
+				});
+		this.metadataTable.autosize();
 	}
 
 	public void deleteItem(ActionEvent t)

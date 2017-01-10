@@ -14,7 +14,8 @@ import com.massisframework.sweethome3d.javafx.JFXPanelFactory;
 import com.massisframework.sweethome3d.plugins.HomeReadyListener;
 import com.massisframework.sweethome3d.plugins.components.fx.ComponentInfoController;
 
-public class ComponentPluginAction extends PluginAction implements HomeReadyListener{
+public class ComponentPluginAction extends PluginAction
+		implements HomeReadyListener {
 
 	private FXHome home;
 	private HomeController homeController;
@@ -31,47 +32,48 @@ public class ComponentPluginAction extends PluginAction implements HomeReadyList
 	{
 
 	}
+
 	@Override
 	public void onHomeReady()
 	{
-		// SwingUtilities.invokeLater(() -> {
-		addSidePane();
-		// });
+		this.addSidePane();
 	}
 
 	private void addSidePane()
 	{
 
-		// try{
 		URL fxmlLocation = ComponentInfoController.class
 				.getResource("ComponentInfoPanel.fxml");
+		JFXPanelFactory.wrapInFXPanel(fxmlLocation,
+				(sidePane, controller) -> {
+					
+					((ComponentInfoController) controller)
+							.setFXHome(this.home);
+					try
+					{
+						HomePane homePane = (HomePane) homeController
+								.getView();
+						Container contentPane = homePane.getContentPane();
+						Container mainPane = (Container) contentPane
+								.getComponent(1);
+						JComponent furniturePane = (JComponent) mainPane
+								.getComponent(0);
+						JComponent tablePane = (JComponent) furniturePane
+								.getComponent(1);
+						furniturePane.remove(tablePane);
+						final JSplitPane splitPane = new JSplitPane(
+								JSplitPane.VERTICAL_SPLIT,
+								tablePane,
+								sidePane);
+						furniturePane.add(splitPane, 1);
+						splitPane.setDividerLocation(150);
 
-		JFXPanelFactory.wrapInFXPanel(fxmlLocation, (sidePane, controller) -> {
-			((ComponentInfoController) controller).setFXHome(this.home);
-			try
-			{
-				//
-				// //
-				HomePane homePane = (HomePane) homeController.getView();
-				Container contentPane = homePane.getContentPane();
-				Container mainPane = (Container) contentPane.getComponent(1);
-				JComponent furniturePane = (JComponent) mainPane
-						.getComponent(0);
-				JComponent tablePane = (JComponent) furniturePane
-						.getComponent(1);
-				furniturePane.remove(tablePane);
-				final JSplitPane splitPane = new JSplitPane(
-						JSplitPane.VERTICAL_SPLIT,
-						tablePane,
-						sidePane);
-				furniturePane.add(splitPane, 1);
-				splitPane.setDividerLocation(150);
-			} catch (Exception e)
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		});
+					} catch (Exception e)
+					{
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				});
 
 		// cip.revalidate();
 	}

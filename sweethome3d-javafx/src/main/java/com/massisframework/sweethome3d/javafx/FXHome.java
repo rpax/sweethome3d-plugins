@@ -3,6 +3,8 @@ package com.massisframework.sweethome3d.javafx;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 import com.eteks.sweethome3d.model.CollectionEvent;
 import com.eteks.sweethome3d.model.CollectionEvent.Type;
@@ -19,6 +21,7 @@ import javafx.collections.ObservableList;
 
 public class FXHome {
 
+	public static final long VERSION = 1000;
 	private Home home;
 
 	private ObservableList<FXHomePieceOfFurniture> furniture;
@@ -36,8 +39,9 @@ public class FXHome {
 		this.furniture = FXCollections.observableArrayList();
 		this.walls = FXCollections.observableArrayList();
 		this.addListeners();
-		this.home.getFurniture().forEach(f -> addHomeObject(this.furniture, f));
-		this.home.getWalls().forEach(w -> addHomeObject(this.walls, w));
+		this.home.getFurniture()
+				.forEach(f -> addHomeObject(this.furniture, f, true));
+		this.home.getWalls().forEach(w -> addHomeObject(this.walls, w, true));
 	}
 
 	private void addListeners()
@@ -67,20 +71,16 @@ public class FXHome {
 			try
 			{
 				Platform.runLater(() -> {
-					this.selectedItems.clear();
-					evtSelectedItems
-							.stream()
-							.filter(o -> (o instanceof HomeObject))
-							.map(HomeObject.class::cast)
-							.map(this::getHomeObject)
-							.filter(fx -> fx != null)
-							.filter(Optional::isPresent)
-							.map(Optional::get)
-							.forEach(s -> {
-								Platform.runLater(() -> {
-									this.selectedItems.add(s);
-								});
-							});
+					this.selectedItems.setAll(
+							evtSelectedItems
+									.stream()
+									.filter(o -> (o instanceof HomeObject))
+									.map(HomeObject.class::cast)
+									.map(this::getHomeObject)
+									.filter(fx -> fx != null)
+									.filter(Optional::isPresent)
+									.map(Optional::get)
+									.collect(Collectors.toList()));
 				});
 			} catch (Exception e)
 			{
@@ -106,7 +106,7 @@ public class FXHome {
 					switch (type)
 					{
 					case ADD:
-						addHomeObject(l, item);
+						addHomeObject(l, item, false);
 						break;
 					case DELETE:
 						removeHomeObject(l, item);
@@ -155,13 +155,20 @@ public class FXHome {
 	}
 
 	private static <HO extends HomeObject, T extends FXHomeObject<HO>> boolean addHomeObject(
-			ObservableList<T> l, HO obj)
+			ObservableList<T> l, HO obj, boolean loaded)
 	{
 		boolean exists = homeObjectExists(l, obj);
 
 		if (!exists)
 		{
-			l.add(createFXHomeObject(obj));
+			T fxobj = createFXHomeObject(obj);
+			if (!loaded)
+			{
+				fxobj.getMassisProperties().objectIdProperty()
+						.set(UUID.randomUUID().toString());
+			}
+			l.add(fxobj);
+
 			return true;
 		} else
 		{
