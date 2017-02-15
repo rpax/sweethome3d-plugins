@@ -3,7 +3,7 @@
   <parent>
     <groupId>com.massisframework</groupId>
     <artifactId>sweethome3d-plugins</artifactId>
-    <version>0.0.7-SNAPSHOT</version>
+    <version>0.0.6-SNAPSHOT</version>
   </parent>
   <artifactId>sweethome3d-javafx</artifactId>
   <name>SweetHome3D javafx libraries</name>
