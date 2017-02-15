@@ -62,8 +62,8 @@ public class ComponentInfoController extends AbstractJFXController {
 				clear();
 			}
 		};
-//		AnchorPane.setLeftAnchor(componentsScrollPane, 0.0);
-//		AnchorPane.setRightAnchor(componentsScrollPane, 0.0);
+		// AnchorPane.setLeftAnchor(componentsScrollPane, 0.0);
+		// AnchorPane.setRightAnchor(componentsScrollPane, 0.0);
 		AnchorPane.setLeftAnchor(componentsAccordion, 0.0);
 		AnchorPane.setRightAnchor(componentsAccordion, 0.0);
 

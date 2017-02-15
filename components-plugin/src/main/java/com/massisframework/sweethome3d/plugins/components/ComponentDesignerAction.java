@@ -27,7 +27,7 @@ public class ComponentDesignerAction extends PluginAction
 	@Override
 	public void execute()
 	{
-		
+
 	}
 
 }

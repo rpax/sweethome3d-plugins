@@ -46,7 +46,7 @@ public class ComponentPluginAction extends PluginAction
 				.getResource("ComponentInfoPanel.fxml");
 		JFXPanelFactory.wrapInFXPanel(fxmlLocation,
 				(sidePane, controller) -> {
-					
+
 					((ComponentInfoController) controller)
 							.setFXHome(this.home);
 					try
