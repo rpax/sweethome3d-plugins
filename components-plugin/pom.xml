@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>com.massisframework</groupId>
 		<artifactId>sweethome3d-plugins</artifactId>
-		<version>0.0.6</version>
+		<version>0.0.7-SNAPSHOT</version>
 	</parent>
 	<properties>
 		<javafx.version>2.2</javafx.version>
@@ -15,7 +15,7 @@
 		<dependency>
 			<groupId>com.massisframework</groupId>
 			<artifactId>pluginsloader</artifactId>
-			<version>0.0.6</version>
+			<version>0.0.7-SNAPSHOT</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
 		<dependency>
@@ -36,7 +36,7 @@
 		<dependency>
 			<groupId>com.massisframework</groupId>
 			<artifactId>sweethome3d-javafx</artifactId>
-			<version>0.0.6</version>
+			<version>0.0.7-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 </project>
