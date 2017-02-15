@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.massisframework</groupId>
 	<artifactId>sweethome3d-plugins</artifactId>
-	<version>0.0.6-SNAPSHOT</version>
+	<version>0.0.5-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>SweetHome3D Plugins</name>
 	<description>Plugins for SweetHome3D</description>
