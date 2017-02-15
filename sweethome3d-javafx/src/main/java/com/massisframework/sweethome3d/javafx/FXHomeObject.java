@@ -6,7 +6,6 @@ import java.util.Optional;
 import com.eteks.sweethome3d.model.HomeObject;
 import com.massisframework.sweethome3d.javafx.properties.HomeObjectMetadata;
 import com.massisframework.sweethome3d.javafx.properties.KnownMetadataHeader;
-import com.massisframework.sweethome3d.javafx.properties.MapMetadataSection;
 import com.massisframework.sweethome3d.javafx.properties.MassisProperties;
 import com.massisframework.sweethome3d.javafx.properties.MetadataObject;
 import com.massisframework.sweethome3d.javafx.properties.MetadataWrapper;
@@ -47,9 +46,9 @@ public abstract class FXHomeObject<HO extends HomeObject>
 		if (json == null)
 		{
 			this.metadata = new HomeObjectMetadata();
-			MapMetadataSection commonMet = new MapMetadataSection(
-					KnownMetadataHeader.COMMON_METADATA);
-			this.metadata.addSection(commonMet);
+//			MapMetadataSection commonMet = new MapMetadataSection(
+//					KnownMetadataHeader.COMMON_METADATA);
+//			this.metadata.addSection(commonMet);
 			
 			this.massisProperties = new MetadataWrapper<>(
 					KnownMetadataHeader.ID_VERSION, new MassisProperties());
@@ -70,9 +69,9 @@ public abstract class FXHomeObject<HO extends HomeObject>
 						"not found " + KnownMetadataHeader.ID_VERSION.getId()
 								+ " in : " + json);
 			}
-			MapMetadataSection commonMet = new MapMetadataSection(
-					KnownMetadataHeader.COMMON_METADATA);
-			this.metadata.addSection(commonMet);
+//			MapMetadataSection commonMet = new MapMetadataSection(
+//					KnownMetadataHeader.COMMON_METADATA);
+//			this.metadata.addSection(commonMet);
 		}
 		this.saveProperties();
 	}
