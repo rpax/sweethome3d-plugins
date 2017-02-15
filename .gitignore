@@ -3,4 +3,5 @@
 /**/*.log
 /**/.classpath
 /**/target/
-
+/**/release.properties
+/**/pom.xml.releaseBackup
