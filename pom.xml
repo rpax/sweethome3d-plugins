@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.massisframework</groupId>
 	<artifactId>sweethome3d-plugins</artifactId>
-	<version>0.0.7-SNAPSHOT</version>
+	<version>0.0.7</version>
 	<packaging>pom</packaging>
 	<name>SweetHome3D Plugins</name>
 	<description>Plugins for SweetHome3D</description>
@@ -25,7 +25,7 @@
 		<connection>scm:git:git@github.com:rpax/sweethome3d-plugins</connection>
 		<url>scm:git:git@github.com:rpax/sweethome3d-plugins</url>
 		<developerConnection>scm:git:git@github.com:rpax/sweethome3d-plugins</developerConnection>
-		<tag>HEAD</tag>
+		<tag>sweethome3d-plugins-0.0.7</tag>
 	</scm>
 	<distributionManagement>
 		<snapshotRepository>
